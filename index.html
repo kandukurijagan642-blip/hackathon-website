@@ -1,0 +1,3806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Synora '26 | National College Hackathon</title>
+  <meta name="description" content="Register for Synora 2026 — 36-hour national college hackathon. AI, Web Dev, Cybersecurity, IoT, Data Science tracks. $10,000 in prizes." />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+       PREMIUM DESIGN SYSTEM (DARK MODE NEON)
+    ═══════════════════════════════════════════════════════════════ */
+    :root {
+      --bg: #03000a;
+      --surface: #090514;
+      --card: rgba(17, 12, 30, 0.65);
+      --border: rgba(255, 255, 255, 0.05);
+      --border-hover: rgba(124, 58, 237, 0.4);
+      --primary: #7c3aed;
+      --primary-glow: rgba(124, 58, 237, 0.5);
+      --secondary: #06b6d4;
+      --secondary-glow: rgba(6, 182, 212, 0.5);
+      --accent: #ec4899;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #475569;
+      
+      --grad-primary: linear-gradient(135deg, #7c3aed, #06b6d4);
+      --grad-glow: linear-gradient(135deg, rgba(124, 58, 237, 0.25), rgba(6, 182, 212, 0.25));
+      --r-sm: 8px;
+      --r-md: 16px;
+      --r-lg: 24px;
+      --r-xl: 32px;
+      
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --dur: 0.4s;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg);
+      background-image: radial-gradient(circle at 50% 0%, #100626 0%, #03000a 70%);
+      background-attachment: fixed;
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-glow);
+    }
+
+    /* Interactive Particle Canvas */
+    #bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    /* Custom Cursor Trailer */
+    .cursor-trailer {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--primary-glow);
+      border-radius: 50%;
+      position: fixed;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 10000;
+      transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+      mix-blend-mode: screen;
+    }
+    .cursor-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--secondary);
+      border-radius: 50%;
+      position: fixed;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 10001;
+    }
+    
+    /* Hover states for cursor */
+    body.hover-interactive .cursor-trailer {
+      border-color: var(--secondary-glow);
+      box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+    }
+    
+
+
+    /* Scroll Progress Indicator */
+    #scrollBar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      z-index: 9999;
+      background: var(--grad-primary);
+      width: 0%;
+      box-shadow: 0 0 12px var(--secondary);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .section {
+      padding: 120px 0;
+      position: relative;
+    }
+
+    /* Reveal animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Section badges and titles */
+    .section-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 18px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: rgba(124, 58, 237, 0.08);
+      color: #c4b5fd;
+      border: 1px solid rgba(124, 58, 237, 0.25);
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: -0.02em;
+    }
+    .section-sub {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 600px;
+    }
+    .grad-text {
+      background: var(--grad-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .text-center {
+      text-align: center;
+    }
+    .text-center .section-sub {
+      margin: 0 auto;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════════════════════════════════ */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      height: 76px;
+      background: rgba(3, 0, 10, 0.7);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+      transition: background var(--dur);
+    }
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--grad-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: #fff;
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.6);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all var(--dur) var(--ease);
+    }
+    .nav-links a:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .nav-cta {
+      background: var(--grad-primary) !important;
+      color: #fff !important;
+      font-weight: 600 !important;
+      border-radius: 9999px !important;
+      padding: 10px 24px !important;
+      box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+    }
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(124, 58, 237, 0.6) !important;
+    }
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       HERO SECTION
+    ═══════════════════════════════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 120px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-glow-orbs {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.3;
+      animation: orbFloat 10s ease-in-out infinite alternate;
+    }
+    .hero-orb-1 {
+      width: 500px;
+      height: 500px;
+      top: -100px;
+      left: -100px;
+      background: var(--primary);
+    }
+    .hero-orb-2 {
+      width: 400px;
+      height: 400px;
+      bottom: -50px;
+      right: -50px;
+      background: var(--secondary);
+      animation-delay: -4s;
+    }
+    @keyframes orbFloat {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(40px, 30px) scale(1.1); }
+    }
+    
+    .hero-inner {
+      text-align: center;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      padding: 8px 24px;
+      border-radius: 9999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 28px;
+      backdrop-filter: blur(12px);
+    }
+    .hero-badge span {
+      width: 8px;
+      height: 8px;
+      background-color: var(--secondary);
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 10px var(--secondary);
+      animation: neonPulse 1.5s infinite alternate;
+    }
+    @keyframes neonPulse {
+      to { transform: scale(1.3); opacity: 0.7; }
+    }
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.3rem, 7.5vw, 5.6rem);
+      font-weight: 800;
+      line-height: 1.05;
+      margin-bottom: 24px;
+      letter-spacing: -0.03em;
+    }
+    .hero-subtitle {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.2rem, 3.5vw, 1.85rem);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+    .hero-sub {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 44px;
+      line-height: 1.7;
+    }
+
+    /* Live Countdown */
+    .countdown-grid {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    .countdown-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 16px 24px;
+      min-width: 100px;
+      backdrop-filter: blur(12px);
+      text-align: center;
+      transition: border-color 0.3s;
+    }
+    .countdown-box:hover {
+      border-color: var(--border-hover);
+    }
+    .countdown-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1;
+      background: var(--grad-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .countdown-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 6px;
+    }
+
+    /* Hero Buttons */
+    .hero-cta-btns {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 15px 36px;
+      border-radius: 9999px;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all var(--dur) var(--ease);
+      border: none;
+    }
+    .btn-primary {
+      background: var(--grad-primary);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(124, 58, 237, 0.6);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      backdrop-filter: blur(12px);
+    }
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       STATS BAR
+    ═══════════════════════════════════════════════════════════════ */
+    .stats {
+      background: rgba(255, 255, 255, 0.01);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 0;
+      backdrop-filter: blur(8px);
+    }
+    .stats-layout {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      text-align: center;
+    }
+    .stat-box {
+      border-right: 1px solid var(--border);
+    }
+    .stat-box:last-child {
+      border-right: none;
+    }
+    .stat-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1;
+      background: var(--grad-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .stat-label {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       ABOUT SECTION
+    ═══════════════════════════════════════════════════════════════ */
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .about-text p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+    .bullet-points {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .bullet-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      transition: all var(--dur) var(--ease);
+    }
+    .bullet-item:hover {
+      border-color: var(--border-hover);
+      background: rgba(124, 58, 237, 0.05);
+      transform: translateX(6px);
+    }
+    .bullet-icon {
+      font-size: 1.5rem;
+    }
+    .bullet-text {
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+    
+    .about-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .glass-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 32px 24px;
+      text-align: center;
+      transition: all var(--dur) var(--ease);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .glass-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--border-hover);
+      box-shadow: 0 16px 36px rgba(124, 58, 237, 0.15);
+    }
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--grad-primary);
+      opacity: 0;
+      transition: opacity var(--dur);
+    }
+    .glass-card:hover::before {
+      opacity: 1;
+    }
+    .glass-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: var(--secondary);
+    }
+    .glass-label {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       TRACKS SECTION
+    ═══════════════════════════════════════════════════════════════ */
+    .tracks-layout {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .track-item-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 40px 28px;
+      transition: all 0.4s var(--ease);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+    .track-item-card:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+    .track-item-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: var(--grad-glow);
+      opacity: 0;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+    .track-item-card:hover::after {
+      opacity: 0.05;
+    }
+    .track-emoji {
+      font-size: 3rem;
+      margin-bottom: 24px;
+      display: inline-block;
+      transition: transform 0.5s var(--ease);
+    }
+    .track-item-card:hover .track-emoji {
+      transform: scale(1.15) translateZ(30px);
+    }
+    .track-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .track-desc {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+    .track-badge {
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: rgba(124, 58, 237, 0.1);
+      color: #c4b5fd;
+      border: 1px solid rgba(124, 58, 237, 0.2);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       TIMELINE SECTION
+    ═══════════════════════════════════════════════════════════════ */
+    .timeline-container {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .timeline-track-line {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+      transform: translateX(-50%);
+    }
+    .timeline-track-fill {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 2px;
+      background: var(--grad-primary);
+      transform: translateX(-50%);
+      height: 0%;
+      transition: height 1.2s var(--ease);
+    }
+    .timeline-item-node {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 56px;
+      position: relative;
+    }
+    .timeline-item-node.right {
+      flex-direction: row-reverse;
+    }
+    .timeline-node-circle {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 4px solid var(--primary);
+      z-index: 2;
+      box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.15);
+      transition: all var(--dur);
+    }
+    .timeline-item-node:hover .timeline-node-circle {
+      background: var(--primary);
+      box-shadow: 0 0 16px rgba(124, 58, 237, 0.8);
+    }
+    .timeline-node-content {
+      width: calc(50% - 36px);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 24px 28px;
+      backdrop-filter: blur(12px);
+      transition: all var(--dur) var(--ease);
+    }
+    .timeline-node-content:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 16px 36px rgba(124, 58, 237, 0.15);
+    }
+    .timeline-node-date {
+      font-size: 0.8rem;
+      color: var(--secondary);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+    .timeline-node-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .timeline-node-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       PRIZES SECTION
+    ═══════════════════════════════════════════════════════════════ */
+    .prizes-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      align-items: end;
+    }
+    .prize-rank-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: 44px 30px;
+      text-align: center;
+      position: relative;
+      transition: all 0.4s var(--ease);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+    .prize-rank-card:hover {
+      transform: translateY(-12px);
+      box-shadow: var(--shadow-card);
+      border-color: var(--border-hover);
+    }
+    .prize-rank-card.rank-1 {
+      border-color: rgba(245, 158, 11, 0.35);
+      background: linear-gradient(150deg, rgba(17, 12, 30, 0.8), rgba(245, 158, 11, 0.03));
+      transform: scale(1.05);
+    }
+    .prize-rank-card.rank-1:hover {
+      transform: scale(1.05) translateY(-12px);
+      box-shadow: 0 24px 60px rgba(245, 158, 11, 0.15);
+      border-color: rgba(245, 158, 11, 0.6);
+    }
+    .crown-banner {
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: white;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 6px 22px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+    }
+    .prize-rank-emoji {
+      font-size: 4.2rem;
+      margin-bottom: 20px;
+      display: inline-block;
+      transition: transform 0.5s var(--ease);
+    }
+    .prize-rank-card:hover .prize-rank-emoji {
+      transform: scale(1.2) translateZ(40px);
+    }
+    .prize-rank-title {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .prize-rank-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1;
+      background: var(--grad-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 24px;
+    }
+    .prize-rank-card.rank-1 .prize-rank-value {
+      background: linear-gradient(135deg, #f59e0b, #fecdb3);
+      -webkit-background-clip: text;
+    }
+    .prize-benefits-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .prize-benefits-list li {
+      padding: 10px 14px;
+      border-radius: var(--r-sm);
+      background: rgba(255, 255, 255, 0.02);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      border: 1px solid rgba(255, 255, 255, 0.01);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       FAQ SECTION
+    ═══════════════════════════════════════════════════════════════ */
+    .faq-layout {
+      max-width: 840px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .faq-item-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      transition: border-color var(--dur);
+    }
+    .faq-item-box.open {
+      border-color: var(--border-hover);
+    }
+    .faq-trigger-btn {
+      width: 100%;
+      padding: 24px 28px;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.05rem;
+      font-weight: 600;
+      font-family: inherit;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .faq-expand-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(124, 58, 237, 0.1);
+      color: #c4b5fd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: transform var(--dur) var(--ease), background-color var(--dur);
+    }
+    .faq-item-box.open .faq-expand-icon {
+      transform: rotate(45deg);
+      background-color: rgba(124, 58, 237, 0.25);
+    }
+    .faq-answer-block {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s var(--ease), padding 0.4s var(--ease);
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .faq-item-box.open .faq-answer-block {
+      max-height: 250px;
+      padding: 0 28px 24px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       REGISTRATION MODULE
+    ═══════════════════════════════════════════════════════════════ */
+    .register-layout {
+      max-width: 880px;
+      margin: 0 auto;
+      background: rgba(10, 5, 20, 0.85);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(24px);
+      position: relative;
+    }
+    
+    .registration-progress-header {
+      padding: 36px 44px 28px;
+      background: rgba(255, 255, 255, 0.01);
+      border-bottom: 1px solid var(--border);
+    }
+    .registration-progress-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-bottom: 28px;
+      text-align: center;
+    }
+    .stepper-nav {
+      display: flex;
+      align-items: center;
+    }
+    .step-node-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+    }
+    .step-node-col:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: calc(50% + 22px);
+      right: calc(-50% + 22px);
+      height: 2px;
+      background: var(--border);
+      z-index: 0;
+      transition: background 0.4s;
+    }
+    .step-node-col.completed:not(:last-child)::after {
+      background: var(--primary);
+    }
+    .step-node-bubble {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border: 2px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      transition: all var(--dur) var(--ease);
+    }
+    .step-node-col.active .step-node-bubble {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.6);
+    }
+    .step-node-col.completed .step-node-bubble {
+      border-color: var(--secondary);
+      background: var(--secondary);
+      color: white;
+    }
+    .step-node-lbl {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+    .step-node-col.active .step-node-lbl {
+      color: var(--text);
+    }
+
+    .form-panel-body {
+      padding: 44px;
+    }
+    .step-content-pane {
+      display: none;
+      animation: stepSlideIn 0.2s var(--ease);
+    }
+    .step-content-pane.active {
+      display: block;
+    }
+    @keyframes stepSlideIn {
+      from { opacity: 0; transform: translateX(16px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .pane-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .pane-subtitle {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+
+    /* Form Fields Grid */
+    .form-fields-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .form-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .form-field-group.span-2 {
+      grid-column: 1 / -1;
+    }
+    .form-field-group label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #cbd5e1;
+    }
+    .form-field-group label .req {
+      color: #ef4444;
+      margin-left: 2px;
+    }
+    .form-field-group label .opt {
+      color: var(--text-dim);
+      font-weight: 400;
+      font-size: 0.8rem;
+      margin-left: 4px;
+    }
+    .form-input-control {
+      width: 100%;
+      padding: 14px 18px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--r-sm);
+      color: var(--text);
+      transition: all var(--dur) var(--ease);
+      outline: none;
+    }
+    .form-input-control::placeholder {
+      color: var(--text-dim);
+    }
+    .form-input-control:focus {
+      border-color: var(--primary);
+      background: rgba(124, 58, 237, 0.05);
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+    }
+    .form-input-control.has-error {
+      border-color: #f87171;
+      box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.15);
+    }
+    .form-input-control.is-valid {
+      border-color: #34d399;
+    }
+    .field-error-feedback {
+      font-size: 0.78rem;
+      color: #f87171;
+      display: none;
+    }
+    .form-field-group.has-err-state .field-error-feedback {
+      display: block;
+    }
+
+    /* Summary Card layout */
+    .summary-card-block {
+      margin-bottom: 24px;
+    }
+    .summary-section-title {
+      font-size: 0.8rem;
+      color: var(--secondary);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+    .summary-details-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .summary-detail-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      padding: 14px 18px;
+    }
+    .summary-detail-lbl {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .summary-detail-val {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      word-break: break-all;
+    }
+
+    /* Stepper Navigation Buttons */
+    .stepper-nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+    .btn-step-action {
+      padding: 12px 32px;
+      border-radius: 9999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      transition: all var(--dur) var(--ease);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-step-next {
+      background: var(--grad-primary);
+      color: white;
+      box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
+    }
+    .btn-step-next:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(124, 58, 237, 0.55);
+    }
+    .btn-step-back {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-step-back:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .btn-submit-registration {
+      background: var(--grad-primary);
+      color: white;
+      padding: 14px 40px;
+      border-radius: 9999px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 6px 24px rgba(124, 58, 237, 0.45);
+      transition: all var(--dur) var(--ease);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-submit-registration:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 36px rgba(124, 58, 237, 0.6);
+    }
+    .btn-submit-registration:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    .btn-spinner-icon {
+      width: 18px;
+      height: 18px;
+      border: 2.5px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+      display: none;
+    }
+
+    /* Notification message below buttons */
+    .submit-feedback-notification {
+      display: none;
+      margin-top: 20px;
+      padding: 16px 24px;
+      border-radius: var(--r-md);
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-align: center;
+      animation: notificationFadeIn 0.4s var(--ease);
+    }
+    .submit-feedback-notification.success-type {
+      background: rgba(16, 185, 129, 0.1);
+      color: #6ee7b7;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .submit-feedback-notification.error-type {
+      background: rgba(239, 68, 68, 0.1);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    @keyframes notificationFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    /* Success Overlay State */
+    .success-feedback-container {
+      display: none;
+      text-align: center;
+      padding: 20px 10px;
+      animation: successReveal 0.6s var(--ease) forwards;
+    }
+    @keyframes successReveal {
+      from { opacity: 0; transform: scale(0.95) translateY(20px); }
+      to { opacity: 1; transform: none; }
+    }
+    .success-badge-emoji {
+      font-size: 5rem;
+      margin-bottom: 24px;
+      display: inline-block;
+      animation: badgePop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes badgePop {
+      0% { transform: scale(0.3) rotate(-30deg); opacity: 0; }
+      70% { transform: scale(1.1) rotate(10deg); }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    .success-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: var(--grad-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+    .success-description {
+      color: var(--text-muted);
+      margin-bottom: 36px;
+      font-size: 1.1rem;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .success-summary-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 24px 28px;
+      max-width: 480px;
+      margin: 0 auto 36px;
+      text-align: left;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    .success-summary-heading {
+      font-size: 0.8rem;
+      color: var(--c-primary-l);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .success-summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+    }
+    .success-summary-row:last-child {
+      margin-bottom: 0;
+    }
+    .success-summary-row span.label-name {
+      color: var(--text-muted);
+    }
+    .success-summary-row span.value-name {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Confetti Particle Pieces */
+    .confetti-particle {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      top: -20px;
+      border-radius: 2px;
+      animation: confettiFallAnimation linear forwards;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    @keyframes confettiFallAnimation {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       CONTACT SECTION
+    ═══════════════════════════════════════════════════════════════ */
+    .contacts-layout-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .contact-item-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 40px 24px;
+      text-align: center;
+      transition: all var(--dur) var(--ease);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .contact-item-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-glow);
+    }
+    .contact-item-icon {
+      font-size: 2.2rem;
+      margin-bottom: 18px;
+      display: block;
+    }
+    .contact-item-card h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .contact-item-card p, .contact-item-card a {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      text-decoration: none;
+    }
+    .contact-item-card a:hover {
+      color: var(--secondary);
+    }
+    .social-links-container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .social-btn-node {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all var(--dur) var(--ease);
+    }
+    .social-btn-node:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════════════════════ */
+    .footer-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 48px 0;
+      text-align: center;
+    }
+    .footer-logo-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin-bottom: 12px;
+    }
+    .footer-section p {
+      color: var(--text-dim);
+      font-size: 0.88rem;
+    }
+
+    /* Floating Action Button */
+    #floatingCTANode {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      z-index: 500;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s var(--ease);
+      pointer-events: none;
+    }
+    #floatingCTANode.visible-state {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       RESPONSIVE GRID LAYOUTS
+    ═══════════════════════════════════════════════════════════════ */
+    @media (max-width: 992px) {
+      .about-layout { grid-template-columns: 1fr; gap: 48px; }
+      .prizes-container { grid-template-columns: 1fr; gap: 40px; }
+      .prize-rank-card.rank-1 { transform: none; }
+      .prize-rank-card.rank-1:hover { transform: translateY(-12px); }
+      .contacts-layout-grid { grid-template-columns: 1fr; }
+      .stats-layout { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .stat-box { border-right: none; }
+    }
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 76px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: rgba(3, 0, 10, 0.98);
+        padding: 32px 24px;
+        gap: 12px;
+        border-bottom: 1px solid var(--border);
+        clip-path: circle(0% at 100% 0);
+        transition: clip-path 0.45s ease-in-out;
+      }
+      .nav-links.mobile-open-state {
+        clip-path: circle(150% at 100% 0);
+      }
+      .hamburger { display: block; }
+      .hero-title { font-size: clamp(2.2rem, 8vw, 3.8rem); }
+      .countdown-grid { gap: 10px; }
+      .countdown-box { padding: 12px 16px; min-width: 80px; }
+      .countdown-value { font-size: 2rem; }
+      .timeline-track-line, .timeline-track-fill { left: 20px; }
+      .timeline-item-node, .timeline-item-node.right { flex-direction: column; padding-left: 52px; }
+      .timeline-node-circle { left: 20px; }
+      .timeline-node-content { width: 100%; }
+      .form-fields-grid { grid-template-columns: 1fr; }
+      .span-2 { grid-column: span 1 !important; }
+      .form-panel-body { padding: 28px 24px; }
+      .registration-progress-header { padding: 28px 24px; }
+      .step-node-lbl { display: none; }
+      .summary-details-grid { grid-template-columns: 1fr; }
+      .qr-scanner-card {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 20px !important;
+        padding: 16px !important;
+        text-align: center !important;
+      }
+      .qr-scanner-overlay {
+        margin: 0 auto !important;
+      }
+    }
+    @media (max-width: 480px) {
+      .countdown-grid { flex-wrap: wrap; }
+      .hero-meta { flex-direction: column; align-items: center; }
+      .segmented-control-option {
+        font-size: 0.8rem;
+        padding: 10px 8px;
+        gap: 4px;
+      }
+    }
+    /* Mobile Sticky Bottom CTA */
+    #mobileStickyCTA {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      background: rgba(9, 5, 20, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(124, 58, 237, 0.3);
+      border-radius: 9999px;
+      padding: 10px 10px 10px 22px;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 999;
+      box-shadow: 0 10px 30px rgba(124, 58, 237, 0.25);
+      transform: translateY(120px);
+      transition: transform 0.4s var(--ease), opacity 0.4s;
+      opacity: 0;
+      text-decoration: none;
+    }
+    #mobileStickyCTA.show-state {
+      transform: none;
+      opacity: 1;
+    }
+    #mobileStickyCTA-text {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    #mobileStickyCTA-text strong {
+      color: var(--text);
+    }
+    #mobileStickyCTA-btn {
+      background: var(--grad-primary);
+      color: white;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 9999px;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.35);
+    }
+
+    @media (max-width: 768px) {
+      #mobileStickyCTA {
+        display: flex;
+      }
+    }
+
+    /* ─── ADVANCED PAYMENT & VERIFICATION UI STYLES ─── */
+    .segmented-control {
+      display: flex;
+      position: relative;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      padding: 4px;
+      margin-top: 8px;
+      margin-bottom: 24px;
+      user-select: none;
+      width: 100%;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .segmented-control-option {
+      flex: 1;
+      text-align: center;
+      padding: 14px 20px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 9999px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .segmented-control-option.active {
+      color: white;
+    }
+    .segmented-control-slider {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      left: 4px;
+      width: calc(50% - 4px);
+      background: var(--grad-primary);
+      border-radius: 9999px;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1;
+      box-shadow: 0 4px 15px rgba(124, 58, 237, 0.35);
+    }
+    .segmented-control[data-active="internal"] .segmented-control-slider {
+      transform: translateX(0);
+    }
+    .segmented-control[data-active="external"] .segmented-control-slider {
+      transform: translateX(100%);
+    }
+
+    .qr-scanner-card {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      align-items: center;
+      margin-bottom: 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      background: rgba(255, 255, 255, 0.01);
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    .qr-scanner-overlay {
+      position: relative;
+      display: inline-block;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid var(--border);
+      padding: 6px;
+      background: white;
+    }
+    .qr-scanner-line {
+      position: absolute;
+      width: calc(100% - 12px);
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+      top: 6px;
+      animation: qrScanAnim 3s linear infinite;
+      z-index: 3;
+      box-shadow: 0 0 10px var(--secondary);
+    }
+    @keyframes qrScanAnim {
+      0% { top: 6px; }
+      50% { top: calc(100% - 9px); }
+      100% { top: 6px; }
+    }
+
+    .custom-checkbox-card {
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      padding: 16px;
+      background: rgba(255,255,255,0.01);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .custom-checkbox-card:hover {
+      border-color: var(--secondary);
+      background: rgba(6, 182, 212, 0.03);
+    }
+    .custom-checkbox-indicator {
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .custom-checkbox-card.checked .custom-checkbox-indicator {
+      border-color: #34d399;
+      background: #34d399;
+      color: white;
+    }
+    .custom-checkbox-indicator::after {
+      content: "✓";
+      font-size: 0.85rem;
+      font-weight: 900;
+      display: none;
+    }
+    .custom-checkbox-card.checked .custom-checkbox-indicator::after {
+      display: block;
+    }
+    .custom-checkbox-label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .file-drag-zone {
+      border: 2px dashed var(--border);
+      background: rgba(255, 255, 255, 0.01);
+      border-radius: var(--r-md);
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+    .file-drag-zone:hover, .file-drag-zone.dragover {
+      border-color: var(--secondary);
+      background: rgba(6, 182, 212, 0.04);
+      box-shadow: 0 0 15px rgba(6, 182, 212, 0.1);
+    }
+    .file-drag-icon {
+      font-size: 2rem;
+      color: var(--text-muted);
+      transition: all 0.3s ease;
+    }
+    .file-drag-zone:hover .file-drag-icon {
+      color: var(--secondary);
+      transform: translateY(-3px);
+    }
+    .file-drag-text {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .file-drag-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+    .file-drag-zone input[type="file"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 5;
+    }
+    .file-preview-container {
+      display: none;
+      position: relative;
+      width: 100%;
+      max-width: 280px;
+      margin-top: 15px;
+      border-radius: var(--r-sm);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 6;
+    }
+    .file-preview-img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+    }
+    .file-preview-details {
+      background: rgba(9, 5, 20, 0.95);
+      padding: 8px 12px;
+      font-size: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+    }
+    .file-preview-name {
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 185px;
+    }
+    .file-preview-remove {
+      color: #f87171;
+      cursor: pointer;
+      font-weight: 700;
+      transition: opacity 0.2s;
+      font-size: 0.88rem;
+    }
+    .file-preview-remove:hover {
+      opacity: 0.8;
+    }
+
+    /* ─── CYBER LOGO & NEON TRANSITIONS ─── */
+    .logo-container-wrapper {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 32px;
+      perspective: 1000px;
+    }
+    .logo-cyber-ring {
+      position: absolute;
+      top: -12px;
+      left: -12px;
+      right: -12px;
+      bottom: -12px;
+      border-radius: 50%;
+      border: 2px dashed rgba(6, 182, 212, 0.4);
+      animation: rotateRing 18s linear infinite;
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.40);
+      pointer-events: none;
+    }
+    @keyframes rotateRing {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .hero-logo-img {
+      width: 155px;
+      height: 155px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3.5px solid var(--secondary);
+      box-shadow: 0 0 50px rgba(6, 182, 212, 0.45), inset 0 0 25px rgba(6, 182, 212, 0.25);
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+    }
+    .hero-logo-img:hover {
+      transform: scale(1.15) rotate(8deg);
+      border-color: #34d399;
+      box-shadow: 0 0 60px rgba(52, 211, 153, 0.65), inset 0 0 30px rgba(52, 211, 153, 0.3);
+    }
+    .neon-flicker {
+      animation: flicker 3s infinite;
+      text-shadow: 0 0 15px var(--secondary);
+    }
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+        filter: drop-shadow(0 0 12px var(--secondary));
+      }
+      20%, 24%, 55% {
+        opacity: 0.88;
+        filter: none;
+      }
+    }
+
+    @keyframes floatAnim {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(0.9); opacity: 0.6; }
+      50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 10px #25d366; }
+    }
+    .wa-faq-widget:hover {
+      background: rgba(37, 211, 102, 0.1) !important;
+      border-color: rgba(37, 211, 102, 0.4) !important;
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.15) !important;
+      transform: translateY(-2px);
+    }
+    .wa-faq-widget:hover .wa-arrow {
+      transform: translateX(4px);
+    }
+    /* Ambient Background Glow Spots */
+    .glow-spot {
+      position: fixed;
+      width: 40vw;
+      height: 40vw;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+      z-index: -2;
+      filter: blur(120px);
+      pointer-events: none;
+      opacity: 0.12;
+      animation: floatGlow 25s infinite alternate ease-in-out;
+    }
+    .glow-spot:nth-child(2) {
+      background: radial-gradient(circle, var(--secondary-glow) 0%, transparent 70%);
+      animation: floatGlowReverse 30s infinite alternate ease-in-out;
+    }
+    @keyframes floatGlow {
+      0% { transform: translate(-10%, -10%) scale(1); }
+      100% { transform: translate(30%, 20%) scale(1.2); }
+    }
+    @keyframes floatGlowReverse {
+      0% { transform: translate(60%, 50%) scale(1.2); }
+      100% { transform: translate(20%, 10%) scale(0.9); }
+    }
+
+    /* 3D Tilt Shimmer Glow Spotlight effect */
+    [data-tilt] {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.15s ease-out;
+    }
+    [data-tilt]::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle 120px at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255, 255, 255, 0.08), transparent 80%);
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    [data-tilt]:hover::before {
+      opacity: 1;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+
+<!-- Ambient Background Glow Spots -->
+<div class="glow-spot"></div>
+<div class="glow-spot" style="top: 50vh; right: 0;"></div>
+
+<!-- Animated Scroll Progress -->
+<div id="scrollBar"></div>
+
+<!-- Interactive Particles Canvas Background -->
+<canvas id="bgCanvas"></canvas>
+
+<!-- Custom Cursor Trailer Elements (Pure JS animations) -->
+<div class="cursor-trailer" id="cTrailer"></div>
+<div class="cursor-dot" id="cDot"></div>
+
+<!-- ═══ NAVIGATION ═══════════════════════════════════════════════ -->
+<nav class="nav" id="navbar">
+  <div class="container nav-container">
+    <a href="#" class="nav-logo">
+      <img src="./logo.jpg" alt="Synora Logo" style="height:36px; width:36px; border-radius:50%; object-fit:cover; border:1.5px solid var(--secondary); margin-right:8px;" />
+      <span>Synora<span style="color:var(--secondary)">'26</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#tracks">Tracks</a></li>
+      <li><a href="#timeline">Timeline</a></li>
+      <li><a href="#prizes">Prizes</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#register" class="nav-cta">Register Now →</a></li>
+    </ul>
+    <button class="hamburger" id="hamburgerMenuBtn" aria-label="Toggle Navigation">☰</button>
+  </div>
+</nav>
+
+<!-- ═══ HERO SECTION ═════════════════════════════════════════════ -->
+<header class="hero" id="home">
+  <div class="hero-glow-orbs">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+  </div>
+  <div class="container">
+    <div class="hero-inner">
+      <!-- Floating Synora Logo Emblem (Advanced Cybernetic Ring & Hover Glow) -->
+      <div class="logo-container-wrapper">
+        <div class="logo-cyber-ring"></div>
+        <img class="hero-logo-img" src="./logo.jpg" alt="Synora Logo" />
+      </div>
+      <div class="hero-badge" style="margin-bottom: 20px;">
+        <span></span> National Level College Hackathon 2026
+      </div>
+      <h1 class="hero-title" style="line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 16px; text-transform: uppercase; font-weight: 800;">
+        SYNORA<span class="grad-text neon-flicker">'26</span>
+      </h1>
+      <h2 class="hero-subtitle">
+        Build the Future with <span class="grad-text" id="typewriterText">GenAI & Software</span>
+      </h2>
+      <p class="hero-sub" style="margin-bottom: 32px;">
+        A premium 7-hour coding battleground for student developers, designers, and innovators to solve critical real-world challenges.
+      </p>
+
+      <!-- Countdown Timer -->
+      <div class="countdown-grid" id="countdownTimer">
+        <div class="countdown-box"><div class="countdown-value" id="val-d">00</div><div class="countdown-label">Days</div></div>
+        <div class="countdown-box"><div class="countdown-value" id="val-h">00</div><div class="countdown-label">Hours</div></div>
+        <div class="countdown-box"><div class="countdown-value" id="val-m">00</div><div class="countdown-label">Mins</div></div>
+        <div class="countdown-box"><div class="countdown-value" id="val-s">00</div><div class="countdown-label">Secs</div></div>
+      </div>
+
+      <div class="hero-cta-btns">
+        <a href="#register" class="btn btn-primary">Register Team <span>→</span></a>
+        <a href="#tracks" class="btn btn-outline">Explore Tracks</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ STATS BAR ═══════════════════════════════════════════════ -->
+<section class="stats">
+  <div class="container">
+    <div class="stats-layout">
+      <div class="stat-box"><div class="stat-value counter-node" data-target="500">0</div><div class="stat-label">Hacker Registrations</div></div>
+      <div class="stat-box"><div class="stat-value counter-node" data-target="7">0</div><div class="stat-label">Hacking Sprint (Hrs)</div></div>
+      <div class="stat-box"><div class="stat-value">₹5,000</div><div class="stat-label">Cash Pool</div></div>
+      <div class="stat-box"><div class="stat-value counter-node" data-target="25">0</div><div class="stat-label">Tech Mentors</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT SECTION ════════════════════════════════════════════ -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="about-layout">
+      <div class="about-text reveal">
+        <div class="section-badge">✦ About The Hackathon</div>
+        <h2 class="section-title">Fueling Innovation & Technical Excellence</h2>
+        <p>Synora 2026 brings together the brightest student developers across the nation. Over 7 hours, teams collaborate to transform ideas into tangible software prototypes and hardware models.</p>
+        <p>Interact with industrial pioneers, receive technical mentorship from cloud experts, and compete for a premium reward structure.</p>
+        <div class="bullet-points">
+          <div class="bullet-item"><span class="bullet-icon">💡</span><span class="bullet-text">One-on-one reviews with expert judges</span></div>
+          <div class="bullet-item"><span class="bullet-icon">🍪</span><span class="bullet-text">Complimentary snacks & refreshments provided for all external students</span></div>
+          <div class="bullet-item"><span class="bullet-icon">💼</span><span class="bullet-text">Physical welcome kit (glowing file, drafting papers, and pen) given at registration check-in</span></div>
+        </div>
+      </div>
+      <div class="about-cards-grid reveal">
+        <div class="glass-card" data-tilt><div class="glass-value counter-node" data-target="7">0</div><div class="glass-label">Sprint Duration (Hrs)</div></div>
+        <div class="glass-card" data-tilt><div class="glass-value">500+</div><div class="glass-label">Participants</div></div>
+        <div class="glass-card" data-tilt><div class="glass-value">₹5K</div><div class="glass-label">Prize Rewards</div></div>
+        <div class="glass-card" data-tilt><div class="glass-value counter-node" data-target="5">0</div><div class="glass-label">Technology Domains</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TRACKS SECTION ═══════════════════════════════════════════ -->
+<section class="section" id="tracks" style="background:linear-gradient(180deg, var(--bg) 0%, var(--surface) 50%, var(--bg) 100%)">
+  <div class="container">
+    <div class="text-center reveal" style="margin-bottom: 60px;">
+      <div class="section-badge">✦ Innovation Domains</div>
+      <h2 class="section-title">Development <span class="grad-text">Tracks</span></h2>
+      <p class="section-sub">Choose a specialization track or propose a creative custom solution under Open Innovation.</p>
+    </div>
+    <div class="tracks-layout">
+      <div class="track-item-card reveal" data-tilt>
+        <span class="track-emoji">🤖</span>
+        <h3 class="track-title">Artificial Intelligence</h3>
+        <p class="track-desc">Implement LLMs, generative agents, computer vision, or machine learning pipelines to solve production problems.</p>
+        <span class="track-badge">GenAI · PyTorch · Agents</span>
+      </div>
+      <div class="track-item-card reveal" data-tilt>
+        <span class="track-emoji">💻</span>
+        <h3 class="track-title">Web Development</h3>
+        <p class="track-desc">Build performant cloud applications, full-stack microservices, real-time collaboration widgets, or developer utilities.</p>
+        <span class="track-badge">React · NextJS · Serverless</span>
+      </div>
+      <div class="track-item-card reveal" data-tilt>
+        <span class="track-emoji">🛡️</span>
+        <h3 class="track-title">Cybersecurity</h3>
+        <p class="track-desc">Create static threat checkers, zero-trust identification systems, vulnerability testing dashboards, or sandboxed environments.</p>
+        <span class="track-badge">Rust · NetSec · OAuth</span>
+      </div>
+      <div class="track-item-card reveal" data-tilt>
+        <span class="track-emoji">⚡</span>
+        <h3 class="track-title">Internet of Things</h3>
+        <p class="track-desc">Develop hardware telemetry integrations, localized sensor nets, smart grids, or custom micro-controller automation firmware.</p>
+        <span class="track-badge">Arduino · MQTT · ESP32</span>
+      </div>
+      <div class="track-item-card reveal" data-tilt>
+        <span class="track-emoji">📊</span>
+        <h3 class="track-title">Data Science</h3>
+        <p class="track-desc">Harvest big data pools, orchestrate analytics processors, clean training sets, and render graphical dashboards.</p>
+        <span class="track-badge">Pandas · Tableau · APIs</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TIMELINE SECTION ═════════════════════════════════════════ -->
+<section class="section" id="timeline">
+  <div class="container">
+    <div class="text-center reveal" style="margin-bottom: 60px;">
+      <div class="section-badge">✦ Timeline</div>
+      <h2 class="section-title">Hackathon <span class="grad-text">Roadmap</span></h2>
+      <p class="section-sub">Stay updated with critical schedules, deadlines, and milestone dates.</p>
+    </div>
+        <div class="timeline-container">
+      <div class="timeline-track-line"></div>
+      <div class="timeline-track-fill" id="tFillLine"></div>
+      
+      <div class="timeline-item-node left reveal">
+        <div class="timeline-node-circle"></div>
+        <div class="timeline-node-content">
+          <div class="timeline-node-date">August 10, 2026 · 08:00 AM</div>
+          <h3 class="timeline-node-title">🚀 Registrations Open</h3>
+          <p class="timeline-node-desc">Application submission begins sharply at 8:00 AM. Reserve your team seats early.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item-node right reveal">
+        <div class="timeline-node-circle"></div>
+        <div class="timeline-node-content">
+          <div class="timeline-node-date">August 24, 2026 · 08:45 AM</div>
+          <h3 class="timeline-node-title">⏰ Registration Closes</h3>
+          <p class="timeline-node-desc">Official portal closure at 8:45 AM. Ensure files and details are submitted.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item-node left reveal">
+        <div class="timeline-node-circle"></div>
+        <div class="timeline-node-content">
+          <div class="timeline-node-date">August 28, 2026 · 08:45 AM</div>
+          <h3 class="timeline-node-title">✨ Inauguration Ceremony</h3>
+          <p class="timeline-node-desc">15-minute grand kickoff event, instructions, and rules overview.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item-node right reveal">
+        <div class="timeline-node-circle"></div>
+        <div class="timeline-node-content">
+          <div class="timeline-node-date">August 28, 2026 · 09:00 AM</div>
+          <h3 class="timeline-node-title">💡 Problem Statement Release</h3>
+          <p class="timeline-node-desc">The official problem statements and project prompts are unlocked globally.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item-node left reveal">
+        <div class="timeline-node-circle"></div>
+        <div class="timeline-node-content">
+          <div class="timeline-node-date">August 28, 2026 · 10:00 AM</div>
+          <h3 class="timeline-node-title">🔥 Round 1 Coding Sprint</h3>
+          <p class="timeline-node-desc">Hacking officially begins! Build and draft your core architecture.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item-node right reveal">
+        <div class="timeline-node-circle"></div>
+        <div class="timeline-node-content">
+          <div class="timeline-node-date">August 28, 2026 · 11:30 AM</div>
+          <h3 class="timeline-node-title">⚡ Round 2 Development</h3>
+          <p class="timeline-node-desc">Integrations, testing pipelines, and UI polishing sprint begins.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item-node left reveal">
+        <div class="timeline-node-circle"></div>
+        <div class="timeline-node-content">
+          <div class="timeline-node-date">August 28, 2026 · 12:30 PM</div>
+          <h3 class="timeline-node-title">🍕 Lunch Break & Recharge</h3>
+          <p class="timeline-node-desc">Take a breather, eat, and discuss features with industry mentors.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item-node right reveal">
+        <div class="timeline-node-circle"></div>
+        <div class="timeline-node-content">
+          <div class="timeline-node-date">August 28, 2026 · 01:15 PM</div>
+          <h3 class="timeline-node-title">🏆 Final Evaluation Round</h3>
+          <p class="timeline-node-desc">Final project sprint closes and pitch presentations to the jury panels begin.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item-node left reveal">
+        <div class="timeline-node-circle"></div>
+        <div class="timeline-node-content">
+          <div class="timeline-node-date">August 28, 2026 · 02:45 PM</div>
+          <h3 class="timeline-node-title">🎉 Event Ends</h3>
+          <p class="timeline-node-desc">Official closing ceremony, results validation, and champion announcements.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRIZES SECTION ═══════════════════════════════════════════ -->
+<section class="section" id="prizes" style="background:var(--surface)">
+  <div class="container">
+    <div class="text-center reveal" style="margin-bottom: 60px;">
+      <div class="section-badge">✦ Prize Structure</div>
+      <h2 class="section-title">Prizes & <span class="grad-text">Trophies</span></h2>
+      <p class="section-sub">Performance rewards for top competitive engineering prototypes.</p>
+    </div>
+    <div style="max-width: 540px; margin: 0 auto;" class="reveal">
+      <div class="prize-rank-card rank-1" data-tilt style="text-align: center; padding: 40px; border: 1.5px solid var(--secondary); box-shadow: 0 0 35px rgba(6, 182, 212, 0.15); margin: 0 auto; display: flex; flex-direction: column; align-items: center; width: 100%;">
+        <div class="crown-banner" style="background: var(--grad-primary); color: white; padding: 6px 20px; font-weight: 700; letter-spacing: 0.05em;">Synora Prize Pool</div>
+        <span class="prize-rank-emoji" style="font-size: 4rem; display: block; margin-top: 10px;">🏆</span>
+        <div class="prize-rank-title" style="font-size: 1.15rem; text-transform: uppercase; color: var(--text-muted); margin-top: 15px; letter-spacing: 0.1em; font-weight: 600;">Total Cash Prize Pool</div>
+        <div class="prize-rank-value" style="font-size: 3.8rem; font-weight: 800; font-family: 'Space Grotesk', sans-serif; color: var(--secondary); margin: 10px 0;">₹5,000</div>
+        <ul class="prize-benefits-list" style="list-style: none; display: flex; flex-direction: column; gap: 10px; align-items: center; justify-content: center; padding: 0; margin-top: 20px;">
+          <li style="display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 1rem;"><span style="color: var(--secondary);">✨</span> Cash Prize to the Top Winning Projects</li>
+          <li style="display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 1rem;"><span style="color: var(--secondary);">✨</span> Winner Trophies & Merit Certificates</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ SECTION ═══════════════════════════════════════════════ -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="text-center reveal" style="margin-bottom: 60px;">
+      <div class="section-badge">✦ Support</div>
+      <h2 class="section-title">Frequently Asked <span class="grad-text">Questions</span></h2>
+    </div>
+    <div class="faq-layout">
+      <div class="faq-item-box reveal">
+        <button class="faq-trigger-btn"><span>Who can register for this hackathon?</span><span class="faq-expand-icon">+</span></button>
+        <div class="faq-answer-block">All undergraduate and postgraduate college students enrolled in any technical degree are eligible to participate.</div>
+      </div>
+      <div class="faq-item-box reveal">
+        <button class="faq-trigger-btn"><span>What is the team size limit?</span><span class="faq-expand-icon">+</span></button>
+        <div class="faq-answer-block">Teams must have 2 to 4 members: Team Leader + Member 1 (required), and optional Members 2 and 3.</div>
+      </div>
+      <div class="faq-item-box reveal">
+        <button class="faq-trigger-btn"><span>Are there any costs or registration fees?</span><span class="faq-expand-icon">+</span></button>
+        <div class="faq-answer-block">Registration is free for internal college students. External (out-of-college) students pay a registration fee of INR 300 per team. We cover workspace access, snacks, mentoring reviews, and provide a physical welcome kit (file, papers, pen) upon registration.</div>
+      </div>
+      <div class="faq-item-box reveal">
+        <button class="faq-trigger-btn"><span>How are selections and updates communicated?</span><span class="faq-expand-icon">+</span></button>
+        <div class="faq-answer-block">
+          <p style="margin-bottom: 12px;">Updates will be sent to the team leader's registered email address and broadcasted on our official broadcast group.</p>
+          
+          <!-- Interactive WhatsApp Card Widget -->
+          <a href="https://chat.whatsapp.com/ESMuU0nwLljLXbWpREEmo2" target="_blank" style="text-decoration: none; display: block; max-width: 320px; margin-top: 8px;">
+            <div class="wa-faq-widget" style="display: flex; align-items: center; gap: 14px; background: rgba(37, 211, 102, 0.04); border: 1px solid rgba(37, 211, 102, 0.2); padding: 12px 16px; border-radius: 8px; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.04);">
+              <div style="font-size: 1.8rem; line-height: 1;">💬</div>
+              <div style="flex: 1; text-align: left;">
+                <div style="font-size: 0.88rem; color: #25d366; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+                  WhatsApp Group
+                  <span style="display:inline-block; width: 6px; height: 6px; background: #25d366; border-radius: 50%; box-shadow: 0 0 8px #25d366; animation: pulseGlow 1.5s infinite;"></span>
+                </div>
+                <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 2px;">Join official announcement channel</div>
+              </div>
+              <div style="font-size: 1rem; color: #25d366; font-weight: bold; transition: transform 0.2s;" class="wa-arrow">→</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ REGISTRATION SECTION ═════════════════════════════════════ -->
+<section class="section" id="register" style="background:linear-gradient(180deg, var(--bg) 0%, var(--surface) 100%)">
+  <div class="container">
+    <div class="text-center reveal" style="margin-bottom: 60px;">
+      <div class="section-badge">✦ Secure Your Seat</div>
+      <h2 class="section-title">Join <span class="grad-text">Synora '26</span></h2>
+      <p class="section-sub">Complete this 5-step registration module to enroll your team.</p>
+    </div>
+    
+    <div class="register-layout reveal">
+      <!-- Registration Header Stepper -->
+      <div class="registration-progress-header" id="stepperProgressBar">
+        <div class="registration-progress-title">📝 Register Your Team</div>
+        <div class="stepper-nav">
+          <div class="step-node-col active" id="node-1">
+            <div class="step-node-bubble">1</div>
+            <div class="step-node-lbl">Team</div>
+          </div>
+          <div class="step-node-col" id="node-2">
+            <div class="step-node-bubble">2</div>
+            <div class="step-node-lbl">Leader</div>
+          </div>
+          <div class="step-node-col" id="node-3">
+            <div class="step-node-bubble">3</div>
+            <div class="step-node-lbl">Members</div>
+          </div>
+          <div class="step-node-col" id="node-4">
+            <div class="step-node-bubble">4</div>
+            <div class="step-node-lbl">Confirm</div>
+          </div>
+          <div class="step-node-col" id="node-5">
+            <div class="step-node-bubble">5</div>
+            <div class="step-node-lbl">Payment</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Stepper Form Body -->
+      <div class="form-panel-body">
+        <form id="hackForm" novalidate>
+          
+          <!-- STEP 1: Team Name -->
+          <div class="step-content-pane active" id="pane-1">
+            <div class="pane-title">What is your Team Name?</div>
+            <div class="pane-subtitle">Choose a unique identification name for your hackathon team.</div>
+            <div class="form-fields-grid">
+              <div class="form-field-group span-2" id="fg-teamName">
+                <label for="teamName">Team Name <span class="req">*</span></label>
+                <input class="form-input-control" type="text" id="teamName" name="teamName" placeholder="e.g. Cyber Knights" autocomplete="off" />
+                <span class="field-error-feedback">Please enter your team name.</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- STEP 2: Team Leader -->
+          <div class="step-content-pane" id="pane-2">
+            <div class="pane-title">Team Leader Details</div>
+            <div class="pane-subtitle">Enter the personal details of the main team organizer.</div>
+            <div class="form-fields-grid">
+              <div class="form-field-group span-2" id="fg-teamLeaderName">
+                <label for="teamLeaderName">Full Name <span class="req">*</span></label>
+                <input class="form-input-control" type="text" id="teamLeaderName" name="teamLeaderName" placeholder="Team leader's full name" />
+                <span class="field-error-feedback">Please enter the team leader name.</span>
+              </div>
+              <div class="form-field-group" id="fg-teamLeaderMail">
+                <label for="teamLeaderMail">Email Address <span class="req">*</span></label>
+                <input class="form-input-control" type="email" id="teamLeaderMail" name="teamLeaderMail" placeholder="leader@example.com" />
+                <span class="field-error-feedback">Please enter a valid email address.</span>
+              </div>
+              <div class="form-field-group" id="fg-teamLeaderMobile">
+                <label for="teamLeaderMobile">Mobile Number <span class="req">*</span></label>
+                <input class="form-input-control" type="tel" id="teamLeaderMobile" name="teamLeaderMobile" placeholder="10-digit number" />
+                <span class="field-error-feedback">Must be a 10-digit number starting with 6, 7, 8, or 9.</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- STEP 3: Members -->
+          <div class="step-content-pane" id="pane-3">
+            <div class="pane-title">Team Members Details</div>
+            <div class="pane-subtitle">Member 1 is required. Members 2 & 3 are optional.</div>
+            
+            <!-- Member 1 (Required) -->
+            <div style="margin-bottom: 28px;">
+              <div style="font-size:0.8rem; color:var(--secondary); font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px;">Member 1 (Required)</div>
+              <div class="form-fields-grid">
+                <div class="form-field-group span-2" id="fg-member1Name">
+                  <label for="member1Name">Full Name <span class="req">*</span></label>
+                  <input class="form-input-control" type="text" id="member1Name" name="member1Name" placeholder="Member 1's full name" />
+                  <span class="field-error-feedback">Please enter Member 1's name.</span>
+                </div>
+                <div class="form-field-group" id="fg-member1Mail">
+                  <label for="member1Mail">Email Address <span class="req">*</span></label>
+                  <input class="form-input-control" type="email" id="member1Mail" name="member1Mail" placeholder="member1@example.com" />
+                  <span class="field-error-feedback">Please enter a valid email address.</span>
+                </div>
+                <div class="form-field-group" id="fg-member1Phone">
+                  <label for="member1Phone">Phone Number <span class="req">*</span></label>
+                  <input class="form-input-control" type="tel" id="member1Phone" name="member1Phone" placeholder="Mobile number" />
+                  <span class="field-error-feedback">Must be a 10-digit number starting with 6, 7, 8, or 9.</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Member 2 (Optional) -->
+            <div style="margin-bottom: 28px;">
+              <div style="font-size:0.8rem; color:var(--text-muted); font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px;">Member 2 (Optional)</div>
+              <div class="form-fields-grid">
+                <div class="form-field-group span-2" id="fg-member2Name">
+                  <label for="member2Name">Full Name <span class="opt">(Optional)</span></label>
+                  <input class="form-input-control" type="text" id="member2Name" name="member2Name" placeholder="Member 2's full name" />
+                </div>
+                <div class="form-field-group" id="fg-member2Mail">
+                  <label for="member2Mail">Email <span class="opt">(Optional)</span></label>
+                  <input class="form-input-control" type="email" id="member2Mail" name="member2Mail" placeholder="member2@example.com" />
+                  <span class="field-error-feedback">Please enter a valid email address.</span>
+                </div>
+                <div class="form-field-group" id="fg-member2Phone">
+                  <label for="member2Phone">Phone <span class="opt">(Optional)</span></label>
+                  <input class="form-input-control" type="tel" id="member2Phone" name="member2Phone" placeholder="Mobile number" />
+                  <span class="field-error-feedback">Must be a 10-digit number starting with 6, 7, 8, or 9.</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Member 3 (Optional) -->
+            <div>
+              <div style="font-size:0.8rem; color:var(--text-muted); font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px;">Member 3 (Optional)</div>
+              <div class="form-fields-grid">
+                <div class="form-field-group span-2" id="fg-member3Name">
+                  <label for="member3Name">Full Name <span class="opt">(Optional)</span></label>
+                  <input class="form-input-control" type="text" id="member3Name" name="member3Name" placeholder="Member 3's full name" />
+                </div>
+                <div class="form-field-group" id="fg-member3Mail">
+                  <label for="member3Mail">Email <span class="opt">(Optional)</span></label>
+                  <input class="form-input-control" type="email" id="member3Mail" name="member3Mail" placeholder="member3@example.com" />
+                  <span class="field-error-feedback">Please enter a valid email address.</span>
+                </div>
+                <div class="form-field-group" id="fg-member3Phone">
+                  <label for="member3Phone">Phone <span class="opt">(Optional)</span></label>
+                  <input class="form-input-control" type="tel" id="member3Phone" name="member3Phone" placeholder="Mobile number" />
+                  <span class="field-error-feedback">Must be a 10-digit number starting with 6, 7, 8, or 9.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- STEP 4: Confirm -->
+          <div class="step-content-pane" id="pane-4">
+            <div class="pane-title">Review Registration Data</div>
+            <div class="pane-subtitle">Confirm accuracy of details before final registration submit.</div>
+            <div id="registrationSummaryPanel"></div>
+          </div>
+          
+          <!-- STEP 5: Verification & Payment -->
+          <div class="step-content-pane" id="pane-5">
+            <div class="pane-title">Verification & Fees Payment</div>
+            <div class="pane-subtitle">Choose your college status and provide verification details.</div>
+            
+            <div class="form-fields-grid" style="margin-bottom: 12px;">
+              <div class="form-field-group span-2">
+                <label>College Group Status <span class="req">*</span></label>
+                <div class="segmented-control" id="collegeStatusToggle" data-active="internal">
+                  <div class="segmented-control-slider"></div>
+                  <div class="segmented-control-option active" data-value="internal">🏫 Internal Student</div>
+                  <div class="segmented-control-option" data-value="external">🌐 External Team</div>
+                </div>
+                <!-- Hidden inputs to maintain compatibility with existing JS radio value mappings -->
+                <div style="display: none;">
+                  <input type="radio" name="collegeStatus" value="internal" id="radioStatusInternal" checked />
+                  <input type="radio" name="collegeStatus" value="external" id="radioStatusExternal" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Internal College Verification -->
+            <div id="sectionInternalCol" class="form-fields-grid" style="margin-bottom: 24px;">
+              <div class="form-field-group span-2" id="fg-internalRegNo">
+                <label for="internalRegNo">College Registration Number <span class="req">*</span></label>
+                <input class="form-input-control" type="text" id="internalRegNo" name="internalRegNo" placeholder="e.g. 2021BCS0123" />
+                <span class="field-error-feedback">Please enter your college registration number.</span>
+              </div>
+              <div class="form-field-group span-2" id="fg-collegeIdFile">
+                <label>Upload College ID Card <span class="req">*</span> <span class="opt">(Photo or Screenshot)</span></label>
+                <div class="file-drag-zone" id="zone-collegeIdFile">
+                  <div class="file-drag-icon">📁</div>
+                  <div class="file-drag-text">Drag & drop your ID card here or <span style="color:var(--secondary); font-weight:700;">browse</span></div>
+                  <div class="file-drag-sub">Supports JPG, PNG (Max 2MB)</div>
+                  <input type="file" id="collegeIdFile" accept="image/*" />
+                </div>
+                <!-- File Preview Container -->
+                <div class="file-preview-container" id="preview-collegeIdFile">
+                  <img class="file-preview-img" src="" alt="College ID Preview" />
+                  <div class="file-preview-details">
+                    <span class="file-preview-name" id="name-collegeIdFile">file_name.jpg</span>
+                    <span class="file-preview-remove" id="remove-collegeIdFile">🗑 Remove</span>
+                  </div>
+                </div>
+                <span class="field-error-feedback" id="err-collegeIdFile">Please upload your college ID card file.</span>
+              </div>
+            </div>
+
+            <!-- External College Payment -->
+            <div id="sectionExternalCol" class="form-fields-grid" style="display: none; margin-bottom: 24px;">
+              <div class="span-2 qr-scanner-card">
+                <div>
+                  <h4 style="font-size: 1.05rem; color: var(--secondary); font-weight: 700; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 8px;">💳 Scan QR for Team Payment</h4>
+                  <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem; background: rgba(255,255,255,0.01); border: 1px solid var(--border); padding: 16px; border-radius: var(--r-sm);">
+                    <div><span style="color: var(--text-muted);">Registration Fee:</span> <strong style="color: #34d399; font-size: 1.2rem; font-family: 'Space Grotesk', sans-serif;">₹300 per Team</strong></div>
+                    <div style="width: 100%; height: 1px; background: var(--border); margin: 6px 0;"></div>
+                    <div><span style="color: var(--text-muted);">Account Name:</span> <strong style="color: var(--text);">Synora Hackathon Committee</strong></div>
+                    <div><span style="color: var(--text-muted);">Bank Name:</span> <strong style="color: var(--text);">State Bank of India (SBI)</strong></div>
+                    <div><span style="color: var(--text-muted);">Account Number:</span> <strong style="color: var(--text);">39880124567</strong></div>
+                    <div><span style="color: var(--text-muted);">IFSC Code:</span> <strong style="color: var(--text);">SBIN0001234</strong></div>
+                    <div><span style="color: var(--text-muted);">UPI ID:</span> <strong style="color: var(--text);">synora@sbi</strong></div>
+                  </div>
+                </div>
+                <div style="text-align: center;">
+                  <div class="qr-scanner-overlay">
+                    <div class="qr-scanner-line"></div>
+                    <img src="./qr.png" alt="PhonePe UPI QR Code" style="width: 150px; height: 150px; display: block; object-fit: contain;" />
+                  </div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Scan with PhonePe or UPI</div>
+                </div>
+              </div>
+              
+              <div class="form-field-group span-2" id="fg-hasPaid" style="margin-bottom: 12px;">
+                <div class="custom-checkbox-card" id="card-hasPaid">
+                  <div class="custom-checkbox-indicator"></div>
+                  <div class="custom-checkbox-label">I have completed the payment of ₹300 per team and uploaded the screenshot.</div>
+                </div>
+                <!-- Hidden Input for Form Validation -->
+                <input type="hidden" id="hasPaid" name="hasPaid" value="no" />
+                <span class="field-error-feedback" id="err-hasPaid">You must complete the payment of ₹300 per team to participate.</span>
+              </div>
+
+              <div class="form-field-group span-2" id="fg-externalTxnId" style="margin-bottom: 12px;">
+                <label for="externalTxnId">Transaction ID / UPI Reference Number <span class="req">*</span></label>
+                <input class="form-input-control" type="text" id="externalTxnId" name="externalTxnId" placeholder="e.g. 324108546729" />
+                <span class="field-error-feedback">Please enter the 12-digit transaction ID or reference number.</span>
+              </div>
+
+              <div class="form-field-group span-2" id="fg-paymentFile">
+                <label>Upload Payment Screenshot <span class="req">*</span></label>
+                <div class="file-drag-zone" id="zone-paymentFile">
+                  <div class="file-drag-icon">📁</div>
+                  <div class="file-drag-text">Drag & drop your screenshot here or <span style="color:var(--secondary); font-weight:700;">browse</span></div>
+                  <div class="file-drag-sub">Supports JPG, PNG (Max 2MB)</div>
+                  <input type="file" id="paymentFile" accept="image/*" />
+                </div>
+                <!-- File Preview Container -->
+                <div class="file-preview-container" id="preview-paymentFile">
+                  <img class="file-preview-img" src="" alt="Payment Preview" />
+                  <div class="file-preview-details">
+                    <span class="file-preview-name" id="name-paymentFile">file_name.jpg</span>
+                    <span class="file-preview-remove" id="remove-paymentFile">🗑 Remove</span>
+                  </div>
+                </div>
+                <span class="field-error-feedback" id="err-paymentFile">Please upload your payment screenshot.</span>
+              </div>
+            </div>
+
+
+
+            <!-- Hidden Inputs to hold Base64 data & names for Apps Script submission -->
+            <input type="hidden" id="fileData" name="fileData" />
+            <input type="hidden" id="fileName" name="fileName" />
+            <input type="hidden" id="fileMime" name="fileMime" />
+            <input type="hidden" id="regType" name="regType" value="internal" />
+          </div>
+          
+          <!-- Stepper Navigation buttons -->
+          <div class="stepper-nav-buttons">
+            <button type="button" class="btn-step-action btn-step-back" id="navBackBtn" style="visibility: hidden;">← Back</button>
+            <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 12px;">
+              <button type="button" class="btn-step-action btn-step-next" id="navNextBtn">Next Step →</button>
+              <button type="submit" class="btn-submit-registration" id="navSubmitFormBtn" style="display: none;">
+                <span class="btn-spinner-icon" id="spinnerIcon"></span>
+                <span id="submitLabel">🚀 Confirm Submission</span>
+              </button>
+              <div class="submit-feedback-notification" id="submitFeedbackNotificationBox"></div>
+            </div>
+          </div>
+        </form>
+        
+        <!-- SUCCESS STATE CONFIRMATION OVERLAY -->
+        <div class="success-feedback-container" id="successOverlayBlock">
+          <div class="success-badge-emoji">🎉</div>
+          <h3 class="success-title">Registration Confirmed!</h3>
+          <p class="success-description">
+            Your team <strong id="successConfTeam" style="color:var(--secondary)"></strong> has successfully enrolled in Synora 2026. Review updates below:
+          </p>
+          <div class="success-summary-box">
+            <div class="success-summary-heading">Enrollment Receipt</div>
+            <div class="success-summary-row"><span class="label-name">Team Name:</span><span class="value-name" id="rec-team"></span></div>
+            <div class="success-summary-row"><span class="label-name">Leader Name:</span><span class="value-name" id="rec-leader"></span></div>
+            <div class="success-summary-row"><span class="label-name">Contact Email:</span><span class="value-name" id="rec-email"></span></div>
+          </div>
+          
+          <!-- WHATSAPP GROUP INVITE BLOCK -->
+          <div class="success-whatsapp-box" style="margin: 24px 0; padding: 20px; border: 1px dashed #25d366; border-radius: var(--r-md); background: rgba(37, 211, 102, 0.03); text-align: center;">
+            <div style="font-size: 1.8rem; margin-bottom: 8px;">💬</div>
+            <h4 style="font-size: 1.15rem; color: #25d366; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em;">Join Synora '26 WhatsApp Group</h4>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px; max-width: 420px; margin-left: auto; margin-right: auto;">
+              It is mandatory for all registered teams to join the official WhatsApp group for live announcements, event guidelines, and queries.
+            </p>
+            
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; margin-bottom: 16px;">
+              <img src="./whatsapp_qr.png" alt="WhatsApp Group QR Code" style="width: 140px; height: 140px; border-radius: 8px; border: 3px solid white; box-shadow: 0 4px 15px rgba(0,0,0,0.15);" />
+              <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Scan QR or click below to join</div>
+            </div>
+
+            <a href="https://chat.whatsapp.com/ESMuU0nwLljLXbWpREEmo2" target="_blank" class="btn" style="background: #25d366; color: white; border: none; padding: 12px 24px; font-size: 0.95rem; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+              Join WhatsApp Group Now →
+            </a>
+          </div>
+
+          <button type="button" class="btn btn-primary" id="btnResetApplication" style="padding:12px 28px; font-size:0.95rem;">Register Another Team</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT SECTION ══════════════════════════════════════════ -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="text-center reveal" style="margin-bottom: 60px;">
+      <div class="section-badge">✦ Contact</div>
+      <h2 class="section-title">Connect with <span class="grad-text">Organizers</span></h2>
+    </div>
+    <div class="contacts-layout-grid">
+      <div class="contact-item-card reveal"><span class="contact-item-icon">✉️</span><h4>Email Helpline</h4><p><a href="mailto:kandukurijagan99@gmail.com">kandukurijagan99@gmail.com</a></p></div>
+      <div class="contact-item-card reveal"><span class="contact-item-icon">📞</span><h4>Call Support</h4><p><a href="tel:+918367047947">+91 83670 47947</a></p></div>
+      <div class="contact-item-card reveal">
+        <span class="contact-item-icon">🌐</span><h4>Official Channels</h4><p>Follow for live announcements</p>
+        <div class="social-links-container">
+          <a href="#" class="social-btn-node">X</a>
+          <a href="#" class="social-btn-node">in</a>
+          <a href="#" class="social-btn-node">Dc</a>
+          <a href="#" class="social-btn-node">GH</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══════════════════════════════════════════════════ -->
+<footer class="footer-section">
+  <div class="container">
+    <div class="footer-logo-title">Synora <span style="color:var(--secondary)">'26</span></div>
+    <p>&copy; 2026 Synora Hackathon Committee. All rights reserved.</p>
+    <p style="margin-top:6px; font-size:0.8rem;">Designed with premium interactions and responsive multi-steppers.</p>
+  </div>
+</footer>
+
+<!-- Mobile Sticky Bottom CTA Bar -->
+<a href="#register" id="mobileStickyCTA">
+  <div id="mobileStickyCTA-text">🚀 Synora '26 · <strong>Register Now</strong></div>
+  <div id="mobileStickyCTA-btn">Apply →</div>
+</a>
+
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     JAVASCRIPT MODULES
+<!-- ═══ CONFIGURATION & URLS ══════════════════════════════════════════ -->
+<script>
+  // ─── CONFIGURATION & URLS ──────────────────────────────────────
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzTfFVmj7_fzrGdDM898TsVOG5_cZyb6-nkE74yqx_bSLKDructRQtlWGfinpWNBJ67/exec';
+  const EVENT_DATE = new Date('2026-08-28T09:00:00');
+  const SHARP_LOGO_BASE64 = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAD6APoDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDzCilpKACloooASloooAKKKKYBRRRQAUUUUwCiiigAooooAKKKKACilooASiiikAUUUUgEpaSigApaSigAooooAKKKKACloooAKKKKYBRRRQAUUtFMBKKWinYAooxS4osAlFLil2n0p2ENopcUoA/vUrANoxTsD1FKAPUU7CuNxRin7aXYafKK5HikqQrimEUmhpiUlLRU2GJRRRSGJRS0UgCiikoAKKKKAFooopgFFFFABS0UVQwpcUUoFNIBMUoWrdlYz3s6Q28bSSOcKqjJNaNxZ2uknbd7Z7odYVb5Yz/tEdT7D866YYdtcz0Q7aXMuCzmmBZFwi/edjhV+pNOZbWHqzTt/s/Kv59T+lNurya5YeY3yr91QMKv0A4FViazk4x+EixK0xP3VVB6KP69aiJzSUVm5NhYKKSlqQDNLmkooAeDVyxuY4bmOSeFZo1YFkb+Iemao5pQauM3F3IlFSVi5ePFNO8kKeWrEkJ2X2qqwpN1KG7U5S5ncUY8qsNIpMVP5LGIygfKG2nnvUJFQ1YpO42kpxFJUlCUUUUhiUUUUgCiiigBaKKKYBS0lLTAKXvxRSgVSRQoFWbS1kuZliiXLH9Pc+1RQxtI6qoJZjgAVdnnW1gNrbkEt/rpB/F/sj2H6n8K6qUElzS2GkXjqaaVC0Glv+9YYkuRwT7L6D36msOWRnYljkmmM2TTSaVWu56dBN3AmkoorlJCkpaKBCUUtFIBKKWkoAWikooAXNLmkopgPDVIu1wcnDdveoKUGmmS0OZSO1NI4q7axC8IhH+uPCf7R9P8KrSxtG5Vhgg4IPaqcNL9CVLWxEaSnupU4PWm1m0aJiUlLSVIwooooAWiiimAtLSUtUMUCnKKQCp4UGdzfdUZNbU4czKSJlcW0G5f9dIOP9lf8T/L61SY5p8shdyxPJqKqqzvothNl2y02a8QyBljjBxubufYCrg8POf+XuL/AL4ar2lY+xWwI425OPqazv8AhILgMdtvbgdshj/Wup0cPShF1L3auccpVZSah0Jl8MzN0uov++WqQeFLg9LuH/vlv8KrjxLdjpDb/wDfLf408eKb0f8ALO3/AO+D/jWbeE6XMZLGdLFhfB903S7g/Jv8KkXwVdn/AJe7f8m/wquvi2+H8Fv/AN+z/jUg8Y34/gt/+/Z/+KqX9X6XMmsf0aLK+Bbxv+Xy3/Jv8KcfAV6P+X22/Jv8KrjxtqS9Etv+/R/+KpT451X+5a/9+z/jUN0SksdbWxBqvhWbS7F7u4vbfauAFAbLE9hxUPhvwxe+IXm+zPHFHCBukkzjJ6AYHXvTbvUtT8TXlraFUZy+2OONcAse5/z0r0u5ktfAnhJUj2yTD5Ywf+W0p6sfYfyAFYTcb+7sdlBVVD969Tl1+FuqN0v7L/x//Cn/APCqtW/6CFj/AOP/AOFVR8TdeHSOxH/bE/8AxVOHxO13utl/34P/AMVUamxZHwq1Tvf2X/j/APhS/wDCq9T/AOf+z/8AH/8ACqw+J2uf3bP/AL8H/wCKpR8Tdb/u2f8A34P/AMVRqBJP8LtWjhZ4rq0lYDIRWYE/mMVxFzby2tw8MyMkiEqysMEEdq9i8B+K7zxC15FfRwgwBWV41K5ByMEZPpXAfEZVXxje7QBkqePXYtCA5lGKnIOKu3c5vR9ofHnAASf7X+1/jVCno201pGVlYiUbu40ikNPYc00ipZSG0lLSVLGJRRRUjFoopapAFKKQU4VSKQ9Bk1eujbJp8EcayC4JLSkkbSP4cfr+dVrVA86K3Ck8n2pLyUTXDyKu1WYkL6DsK7Ivkpt9yuhATTaU0lcbIOl00/6NbD/Y/wAa5muj084gtv8Ac/xrnVUu6qvUnArvxqvGl6GcY2bEorTtrG5hk3mKKTjGGNaMUN1xiwtD9T/9asoYOTV5XXyY5Ssc3S12MMF520qwb6sP8KgvtWbTrgQXGi6fv2huMHg/hUzw/Jq3+DOZ4l83LFXfqjlaAMnAqW4lE9zJKI0jDsW2IMBc9hWv4X0b+19UjikyLdfmmYdl9B7np+fpWCjd6G7mlG70O1+Gfh5LW0fX74BSykQF+AqfxP8Aj0+mfWuO8Z+IG8Qa08sZP2SHKW6n+7/e+p6/lXX/ABG8Rpa6bHoFgQhkQeds4CR/wp+P8vrXmHeotqUndXQlFdfpmotqZaK10HT2aNAWJwvHT0q1Lb3nfRNPX6OP8K6IUOZXT/BnHPGckuWSs/VHDUV1F3bXUkLx/wBm2cZYY3Kw49+lYN1Yz2ihpguCcDDZpVKEoa9PQ2pYiNT19Uzu/hK+241Q/wDTOP8A9CasL4inPi+7Psn/AKAtbHwr/wBdqeP7kf8ANqxfiD/yNl1/up/6AtYG5zVKKSlpgP6r9KQ9KE64pSMHBqiRlJTiKaallCUUtGPcVIxKXjFHX60UwFFOFNFPVSTVxRSJUO1Hb2xULGtG30vULqHdbWVxMmeTHEzD9BSnQNZ/6BV9/wCA7/4VvUvZIGzKNFaE2iarDE0sumXiRoMszQMAo9ScVn1zsk37I4toD/0z/wAawUKh1Lglc8gVpQ6hDHbxoVk3KuDgDHf/ABrLrrxVWM4w5XsgNNVtjg/Zroj2z/jUyLZfxWd6fpn/ABrOF7cgACZuPpThqF2OkzfkKar0u34IT1LN5Np5hK2sdykwYcu/GO/es/JJySSfekJLMWY5JOSfWlArmlLmdyUrEkUbSSKigkk4AHU13dnJD4a0VpXAMvVh/ffsv0H+Jrn/AA9aqj/a5ByOIwfXuaq67qRvrkIjfuIshf8AaPc10xj7Knzvd7HBXjLEVVTXwrf/ACM+7uZry6lubhy8srFmY9zUFLSVxHoIVWZDlWIPscV0FqdMuIF2W+oySKo3lWJGfwNc9Vm0v7qyDi2maMPjcBjmtKU1F67GVem5x916/ca8kNkOlrqA+ob/ABqherarEdkVyrn7vmZx+tRtq1+/3rlj+A/wpokub+WOEsZHZgqLwMk8VvOrTcWorX0RlTpVIu8n+LO3+EwDXGqA/wDPOP8Am1YfxEx/wmF2Ac4Cf+gLWbq2iapojRrqFu9uZclPmB3Y69D71HBo2q3USzQ6ddyxtyrrCxB+hxXIdRn0tag8O60f+YXef9+G/wAKr3OmXtowW6tZoWPQSIVz+dNJsG0VV61PMqbgUJIKgnPrjmprTTbu6fZbW8sr+iKWP5Cti38K61Lgf2ddD/eQitowdrGM6iWtznCMdRz6UhA7gD86373wzqtojSS6dcBVGWbYSB+NYksTof3gP0NTKm0VCopbEJx2IH503A/vCnE/7I/Kkz7CsmaoTrS9frSU7HsaaRQAGpYVLSKpOAzAZqMD2NORijBh1ByKtaDPcde1i28GaDbfZrPzIwwhjjVtgHBJJOPb8zXLH4sN/wBAYf8AgR/9jWuniPwr4m0mNNZlt4yMM8FwxQo+OoPfv0NVhp3w47yad/4FN/jWXqSYurfExtR0q6sf7KEf2iJo9/n525GM421zfh/wpqfiKGaXTzAFhYK3mPt5Iz6Gu/vvA/hrV9JkuPD7IkgB8uSKYujMP4SCTUfwiGNN1EdP9IT/ANBouB5TLGYpXjbG5GKnHqK2fDvhbUfESztp5gAgKh/Mfb1zjHB9Ky9Q/wCP+4/66v8AzNelfB3/AI99V/34v5NQwOJ0jwtqesahc2VmsXmWpIlZ3woOSOv1BrZ/4Vl4g/vWX/f4/wCFdB8OD/xUfiH/AK6f+1HrB17xx4itNev7a3v9kUVw6IvlIcKCQO1FwILr4deIbaBpRFBPtGSkMuW/AEDNc3a2c9zex2kMLyTO20Io+YmvTPh34p1XWr28t9TnWZY4hIjbApB3AY4+tReHIYU+KmtYQDy1kZPYkrn+ZpqViWih/wAIP4je18tVtIQV27TPyo9OBiqUvw319IyyrbSED7qTcn6ZAq74w8aa7YeJbyysbtYYICFVRGpz8oOSSOvNTeB/GGtan4khsdQulmglR8gxqCCFJBBA9qudac9ZEqEVscBPZ3EN0baSF1nDbDGV+bPTGPWumt/hx4hnhWRoreEsM7JJsMPqADXS6hBCfjBYnYPnjWQ+7BGwf0H5Uz4g+LNX0fWorPTbhYY/IWQ/uwxYkn1HtWbZSRxfiDwpqXh6KGW/MBWZiq+U+7kDPoK1U+GniB41bNmNwBwZjx+lYmreItX15YYtQuTOI2zGojUcnjsOa9Bs7D4iS2yO+q2tuSBiOQLuH1whouM5v/hWXiD+9Zf9/j/hWHe6VqPhvV4Fv4FjkR1kQlso4B65Hb1716XBpvj9Jo2k1uwdAwLKV6jPI+5VH4vKp07TmwMiZwD7bRQmFjnPiNr9prOoWkdlKkyW0RDSpnazNgkDPYYrUsvih9ms4LYaQu2GNUGJyOgx0215yOTzXq2geAtFttEivdfO+SRBI++UxpED0HBHPuaGBX/4Wt/1CB/3/P8A8TW/qM9t4o+H09/Jb7N1u8qKx3GN0zyD9R+Rqn/YHw+/56WP/gaf/iqj8TeItB0fwtLpOjTQSPJEYYooG3hA3Uk/ifcml6ASfDqK3sPB82pmPMjGR5GH3iqdAPy/Ws3/AIWr6aR+dx/9jWx4A8g+AkW5x5DGYSZOBtyc5/CqRsvh2BhW0/H/AF8P/jVaN6itpoY+r/EltQ0u6sRpYj+0RNHv8/O3PfGK4FnOc9a9R1Lwf4f1TR5LnQdiSKrGN4ZS6OR/Cck//Wrysk9s079hWAkeh/OjcPRvzpCT3bFJlvelcdhRRmkH1pwPuPyposMdMHNOC5OBzQG46j8qnguDEwKohx6qDWsIxb1ZMm0tDsU+GOpMit/aFoMgHGH/AMKcPhbqZ/5iVn+T/wCFVV8fa4lts+05PTcUGR+lUpfHHiEkkanKPYAf4U50bfaRnGcn0PSfC+jf8Ij4eulv7uJwHaeR1BCqNoGOfpWD8JLqJotTt9wEplWUJ3K4Iz+f864LUfEWr6pEIr6/nmjBzsZvlz9BU3hXS9U1XVCuj3K29zCnmeYZCmBkDgj61g0u5odRe/C/U5byaSG/szG7sy79wOCc88V1XgTwxdeGorxLu4glNw6FfKzwBnrkD1rF/sP4hD/mPQ/9/j/8TXReGbTWtOtrmXxHqaXLEhlw2ViRQcnOB/kVIzmfh623xF4i/wCuv/tR64PxMc+JtT/6+pP/AEI04a5fWWqXtxpV3LALmVmJT+IbiR/Os+d7i5nknn3vLIxZ2I5YnqaaTEdp8Kjt1a+P/TsP/QxWpo1xFD8VtWSVwpnVkTP8TfKcfXANef6dqGo6XK8unzTQO67WKDqOuKguLu4urt7u4md7h23NITyT60NMD0jxL4EvNX1241C1vLZEnIYrKGBU4A7A+lSeFPBF5outx391eW7rGrBUiDEsSMdwPWuHTxd4hRAi6vdYUYGWz/OiXxb4hmjaN9WutrDBw2P1FAHZ3F5FcfF218lg3kx+U5HZgjZH4ZrE+KLbvE0f/Xqn82rAtftWmut9DO8FxHlg6nkZ4x+tVdQ1G81O4Fxf3DzyhQoZuuB2/WrnTlTtzCTT2J/D8sUPiDTpZyqxJcxli3QDcOTXsHiuw8Qag1t/YWqLZqm7zQXKbicYOQDmvDwM8DrWza+JPEVpbpBb6jeJEgwq5zgegzUWbGdzD4f8cCaMy+IgUDAt/pDnjPPal+LcinTtOGRkzOQPbaP8a4v/AIS3xP8A9BO7/L/61ZmpajqGpTiXUriaeUDAMh6D29KLMLlVete56/o02veE4bC3mjidhE+6TOOAPSvELe2uLgkW8EsxXqEQtj8q2m8WeJrQiCTUbuIoANjDBAxxwRSYHQH4YamOup2f5P8A4VT1D4eX9lZT3T6hauIY2kKgNkgDPpWV/wAJr4i/6Ctx+Y/wqG48V67cwSQTalO0cilXUkcg9R0pgeheA3jvPA7WSS4fMsUmOqbs4P5GufPw21ADA1K0P4P/AIVyGn6ne6bMZbC5lgcjBKNjI9/WtT/hMPEAA/4mc/PuP8KpIR6PoenDwx4YnivLlJFj8yaSRQQoyOnP0/WvGCa0dR13VdTiEV9fTzRA52M3y5+lZtSxhRmikpDFqVogsSP5infn5QckY9fSoqXNUmgFGPX9KXOOlNpQapMY4dCKYaevUZpGGDiqa0uDQyrul6tf6PO8+m3LQSOuxmUA5Gc45+lU8VqWOn4jE8653cxoe/8AtH29PWnSoyqy5YiL/wDwmvinH/IUn/74X/CqWoeJ9c1K3Nve6lPJC3VMhQ31Axmo9SdYcwIcyfxn+77fX1rMpVqcYS5U7gyxaJGzlnnERXBGR1q/5i/8/wBH/wB8ispGKOrAAlTnB6VdOqSH/ljD+VbUK0YRs9Pv/wAxon8wf9BBP++BVG4hijUGO4WQk8gDpU39pyf88Yvyo/tN/wDnjD+VaVKlKorN/n/mQ79CjWtomnm4kNw65jjOFH95v/rf4VSgie/vljXYjSt1PCr6mun1e5ttJ0qO1snVpGXahUg7R3Y47/57VjQjFSc5bL8TlxFaSapw+J/gYOsXIkn8iI5SM8kfxN/9as2irFndtaSM6xxuSMYcZrKc/az5pvc6Yx5Y2RNaW8BRJWvVikBztI6VcMoHTUoz/wAAFQHWZD/y7W//AHyaadWkP/LvB/3zXZTrUqasn+f+ZnKMn0/IuJMO+pxD/gArP1N99ypFys/yj5lXGPanvqrtEyfZ4RuBGdvSs+sa9dTXKtfv/Vk0qTUuZ/p/kejfCE/6Xqgzg+VH3/2jWP8AEq0ni8Vz3EkbCKdUaNz0YBQD+RFYGjardaNqMd7ZvtkQ8g9HHdT7GvWll0zxpoHIwp6jq8EmP8+xH6cp0Hi1LWlrmjXOjX721yvTlHH3XXsR7VnAdKAFUZNWbqONJQiNwqgEkd8c/rUmlpbveJ9rLrAvLlBkgCobggyMQc5JOa3UbQuZOV52K5pKU0lYs1QlJS0lSMWiiimAtFFFNDHipHTMYcfQ1EKt2CpLewQy/wCrkkVW5xxmt6dnoxotaVpwcC5uF/d/wIf4z/h/Pp61e1C7NmPlObtxn/rmD0P1PYduvpWoVKOGKL8pHykcDHbHpWfNaWhdna3BdiSzGRySfzr2VhZwp8lLruy3CxzD5Jyabiuha0tc/wCoH/fbf40w2lp/z7j/AL7b/GuOWV1X1Rm0YFFb4s7Q/wDLuP8Avtv8akWwsj1tl/77b/GoeV1u6M5TSOcrQ07SZr9GkV1jjU43Nnk+gxWymmWB62q/99t/jT7m1vVWJdLlWKNF2+XkAD3yalYGUNZq68tznqYjS0dH5lNfC07dLqH/AL5arVv4IvJzhLu3H1Df4UJb+Jc/Lcp/32v+FaNpZeNW5t7tR/20Qf0qJ06aWkGjljVrOaXtIip8L9TdQRqFkM+of/CsnxJ4K1Hw9aJdzyQ3EDNtZoc/Ie2cjvXSC0+IuOL/AP8AI0f+FaOj6X4mu5ZY/FF951g0ZVrfcjeaT6kDgDr65xXG0emnoeS4pMGvZh4H8Of8+L/9/wB/8akHgbw5/wA+Un/gQ/8AjSsO54rg0YNe1f8ACD+HP+fKT/wIf/GkPgjw7/z5P/3/AH/xoGeLgGtnw7rN1ot+txAcoflkjJwJF9D7+h7GvTf+EK8PZ/48n/7/AL/404eCvD5/5c5P+/7/AONAh95Y6b4x0FHicbWBMMuPmifuCP0I/H0ryPVNNudK1CSzvIyksZ5HqOxB7g+te3aLoOn6OZP7OikiEuN6mVmBI74J6+9c/wDFW0tDoVvdyBVukmEaN3ZSCSPpxn/9dCeoM8uB8u2x/FJ/6CP/AK/8qrMac7Fjz9PwphPNaSZEUIabS0lZssKSlpKkYtFFFMApaSlpoBRThTaUGtExmkur6iI8ecHwOrIGP5kVE2r3h6uv/ftf8KqKxBzT2i3oXQdPvD0966VUqOPuSf3lXb6kp1O5P8S/98D/AApv9o3P95f++BVUiisfrFb+Z/eTdloaldf31/74FOGqXY/jX/vgVSoo+s1v5n95LinuaK6xeL0kX/vgf4VYj1++To0f4xrWPSg0/rFX+ZmUqMHujpIPFV/GRxAfrCtatv49v4Uwsdvn18sVxAanbqft5PfUx+q007pWOxm8f60fuSxL9Ilqo/jvxAel6o/7Yp/hXMFqQmolO5rGmkdGfHXiLtfj/vyn+FJ/wnfiT/oIf+QU/wAK5uis2zVI6T/hO/En/QQ/8gp/hSf8J34j/wCgh/5BT/CubopDOk/4TrxF/wA//wD5BT/ClHjvxH/z/wD/AJBT/CubxT0QscAUJXE3Y6MePfE3bUf/ACCn+FZOraxqWsTrLqd3JOyDC7sAL9AOBSz2bWKBZ1xO4BC/3Qe59zVE1cocu5EZqWw00lBpKhloKSlpKljEooopDFooopgFFFFAC0UlFVcB2alilaJwynBHSoaXNXGbi7ody5MkVxmSBQjd4x/T/CqjKQTkUqsR0qQuH+/97+9WsnGeuzG9SCinuhGD2PQ0zFYuLRIlLRRUiClzSUUALmiiloEJRTgKULmnYVxuKUKTU8UDO21Rk1r6f4du7skqm1FGWduFUe5rWFGUtjKdeEN2Y8UDyHCqT9K0liXTCruA10DkIRkJ7n39q055bPSYWhsiJZ/4rg8Y/wB0f1rnZ5i7Fick/rW7jGkvMxjOVZ9l+YlzM80jSSMWZjkk9SarE5pWYk8001yyldnVGNlYCxOMnpwKSlptZstBSUtFSMSiiigBaKSigBaKKKYBRRRQAUtJRTAWlzTaWquA4GjIptLTuA+SPaQAytkA5U5x7VHilzRk0OzEJSilyPSlyvvSsK4gFOC+lOBj7hqlSWBf+WJY+7/4CqUV3JbfYjWMntWrp+i3d3hhHtj7yP8AKo/E1Wj1F4v9RFFGfUJk/mc02XULmY5mmdz/ALTE1tD2cd9TCftJbaHXWUeiaNh55Ptkw5CpwgP171T13xNLfqY4wsMI/wCWaDAFcu1wzdSaiLk961liEvhRjDCa803clmmLnk5quWNBNNrklJs7YxsFFFJUFgaSiipYwpKKKQBRRRQAUtJRQAtFFFABRSUtMAooooAKKKKYBS0lFAC0UlLTEFLSUUALmlzTaKLisP3UbqZmlzTuFhc0ZpM0lK4WFpKKSkMWkoopDCkpaSkAtJRRQAUUUUAFFFFAC0lFFABRRRQAtFJRQAtFFFMAooooAKKKKYBRRRQAUtJRQAtFJRQIWikooAKKKKQwopKKQBRRRQAUUUUAFFFFAH//2Q==";
+  const WATERMARK_LOGO_BASE64 = "data:image/jpeg;base64,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";
+
+
+
+  // ─── INTERACTIVE HTML5 CANVAS BACKGROUND ───────────────────────
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  let mouse = { x: null, y: null, radius: 150 };
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+  window.addEventListener('mouseleave', () => {
+    mouse.x = null;
+    mouse.y = null;
+  });
+
+  class Particle {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * 2 + 1;
+      this.speedX = Math.random() * 0.6 - 0.3;
+      this.speedY = Math.random() * 0.6 - 0.3;
+      this.baseOpacity = Math.random() * 0.5 + 0.1;
+      this.opacity = this.baseOpacity;
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+
+      if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+      if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+
+      // Interaction with mouse
+      if (mouse.x !== null && mouse.y !== null) {
+        let dx = mouse.x - this.x;
+        let dy = mouse.y - this.y;
+        let distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < mouse.radius) {
+          this.opacity = 0.8;
+          // Subtle magnetic pull
+          this.x -= dx * 0.01;
+          this.y -= dy * 0.01;
+        } else {
+          if (this.opacity > this.baseOpacity) this.opacity -= 0.02;
+        }
+      } else {
+        if (this.opacity > this.baseOpacity) this.opacity -= 0.02;
+      }
+    }
+    draw() {
+      ctx.fillStyle = `rgba(124, 58, 237, ${this.opacity})`;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.fill();
+    }
+  }
+
+  function initParticles() {
+    particles = [];
+    const count = Math.min(Math.floor((canvas.width * canvas.height) / 11000), 120);
+    for (let i = 0; i < count; i++) {
+      particles.push(new Particle());
+    }
+  }
+  initParticles();
+
+  function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < particles.length; i++) {
+      particles[i].update();
+      particles[i].draw();
+    }
+    // Connect particles
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i; j < particles.length; j++) {
+        let dx = particles[i].x - particles[j].x;
+        let dy = particles[i].y - particles[j].y;
+        let distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < 120) {
+          let alpha = (1 - (distance / 120)) * 0.15;
+          ctx.strokeStyle = `rgba(6, 182, 212, ${alpha})`;
+          ctx.lineWidth = 0.8;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(animateParticles);
+  }
+  animateParticles();
+
+  // ─── PREMIUM CUSTOM CURSOR SYSTEM ─────────────────────────────
+  const trailer = document.getElementById('cTrailer');
+  const dot = document.getElementById('cDot');
+  let trailerPos = { x: 0, y: 0 };
+  let currentPos = { x: 0, y: 0 };
+
+  window.addEventListener('mousemove', (e) => {
+    currentPos.x = e.clientX;
+    currentPos.y = e.clientY;
+    dot.style.left = `${e.clientX}px`;
+    dot.style.top = `${e.clientY}px`;
+  });
+
+  // Lerp motion for the trailer circle
+  function updateCursor() {
+    let dx = currentPos.x - trailerPos.x;
+    let dy = currentPos.y - trailerPos.y;
+    trailerPos.x += dx * 0.15;
+    trailerPos.y += dy * 0.15;
+    
+    trailer.style.left = `${trailerPos.x}px`;
+    trailer.style.top = `${trailerPos.y}px`;
+    requestAnimationFrame(updateCursor);
+  }
+  updateCursor();
+
+  // Interactive hover tracking
+  document.querySelectorAll('a, button, input, .faq-trigger-btn, .glass-card, .track-item-card, .prize-rank-card').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('hover-interactive'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('hover-interactive'));
+  });
+
+  // Hide cursor elements on touch devices
+  window.addEventListener('touchstart', () => {
+    trailer.style.display = 'none';
+    dot.style.display = 'none';
+  });
+
+  // ─── PURE JS 3D TILT EFFECT ────────────────────────────────────
+  document.querySelectorAll('[data-tilt]').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const midX = rect.width / 2;
+      const midY = rect.height / 2;
+      
+      const rotX = -((y - midY) / midY) * 12; // tilt limit 12deg
+      const rotY = ((x - midX) / midX) * 12;
+
+      card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.02, 1.02, 1.02)`;
+
+      // Update custom properties for spotlight shimmer
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
+    
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+    });
+  });
+
+  // ─── HERO TYPEWRITER HEADLINE ──────────────────────────────────
+  const typeText = document.getElementById('typewriterText');
+  const words = ["GenAI & Software", "Web Innovation", "Cyber Solutions", "IoT Ecosystems"];
+  let wordIdx = 0;
+  let charIdx = 0;
+  let isDeleting = false;
+  let typeSpeed = 100;
+
+  function typeEffect() {
+    const currentWord = words[wordIdx];
+    if (isDeleting) {
+      typeText.textContent = currentWord.substring(0, charIdx - 1);
+      charIdx--;
+      typeSpeed = 40;
+    } else {
+      typeText.textContent = currentWord.substring(0, charIdx + 1);
+      charIdx++;
+      typeSpeed = 100;
+    }
+
+    if (!isDeleting && charIdx === currentWord.length) {
+      isDeleting = true;
+      typeSpeed = 2000; // Pause at full word
+    } else if (isDeleting && charIdx === 0) {
+      isDeleting = false;
+      wordIdx = (wordIdx + 1) % words.length;
+      typeSpeed = 500; // Pause before typing next
+    }
+    setTimeout(typeEffect, typeSpeed);
+  }
+  setTimeout(typeEffect, 1000);
+
+  // ─── SCROLL PROGRESS INDICATOR ─────────────────────────────────
+  window.addEventListener('scroll', () => {
+    const scTop = document.documentElement.scrollTop;
+    const shHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('scrollBar').style.width = `${(scTop / shHeight) * 100}%`;
+  });
+
+  // ─── MOBILE STICKY CTA CONTROL ──────────────────────────────────
+  window.addEventListener('scroll', () => {
+    const cta = document.getElementById('mobileStickyCTA');
+    if (!cta) return;
+    
+    const regSection = document.getElementById('register');
+    if (!regSection) return;
+
+    const regTop = regSection.offsetTop;
+    const regBottom = regTop + regSection.offsetHeight;
+    const scrollY = window.scrollY;
+
+    // Show after scrolling past 600px but hide if already viewing register form to avoid overlap
+    if (scrollY > 600 && (scrollY < regTop - 300 || scrollY > regBottom - 100)) {
+      cta.classList.add('show-state');
+    } else {
+      cta.classList.remove('show-state');
+    }
+  });
+
+
+
+  // ─── EVENT LIVE COUNTDOWN TIMER ────────────────────────────────
+  function runTimerCountdown() {
+    const now = new Date();
+    const diff = EVENT_DATE - now;
+    if (diff <= 0) {
+      document.getElementById('countdownTimer').innerHTML = '<div style="font-size:1.6rem;font-weight:700;color:var(--secondary)">🔴 Hacking is Now Live!</div>';
+      return;
+    }
+    const days = Math.floor(diff / 86400000);
+    const hrs = Math.floor((diff % 86400000) / 3600000);
+    const mins = Math.floor((diff % 3600000) / 60000);
+    const secs = Math.floor((diff % 60000) / 1000);
+    
+    document.getElementById('val-d').textContent = String(days).padStart(2, '0');
+    document.getElementById('val-h').textContent = String(hrs).padStart(2, '0');
+    document.getElementById('val-m').textContent = String(mins).padStart(2, '0');
+    document.getElementById('val-s').textContent = String(secs).padStart(2, '0');
+  }
+  runTimerCountdown();
+  setInterval(runTimerCountdown, 1000);
+
+  // ─── SCROLL INTERSECTION REVEAL ────────────────────────────────
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // ─── STATS COUNT UP NUMBERS ────────────────────────────────────
+  function triggerStatsCounter(el) {
+    const targetVal = +el.dataset.target;
+    const duration = 2000;
+    const startTime = performance.now();
+    
+    function updateCounterStep(nowTime) {
+      const elapsed = Math.min((nowTime - startTime) / duration, 1);
+      const easeVal = 1 - Math.pow(1 - elapsed, 4); // Quartic ease out
+      el.textContent = Math.floor(easeVal * targetVal);
+      if (elapsed < 1) requestAnimationFrame(updateCounterStep);
+    }
+    requestAnimationFrame(updateCounterStep);
+  }
+  
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        triggerStatsCounter(entry.target);
+        statsObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('.counter-node').forEach(el => statsObserver.observe(el));
+
+  // ─── TIMELINE TRACK LINE PATH ANIMATION ─────────────────────────
+  const timelineObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setTimeout(() => { document.getElementById('tFillLine').style.height = '100%'; }, 200);
+        timelineObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  const tfLine = document.getElementById('tFillLine');
+  if (tfLine) timelineObserver.observe(tfLine.parentElement);
+
+  // ─── FAQ COLLAPSE ACCORDIONS ───────────────────────────────────
+  document.querySelectorAll('.faq-trigger-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const box = btn.parentElement;
+      const wasOpen = box.classList.contains('open');
+      document.querySelectorAll('.faq-item-box.open').forEach(b => b.classList.remove('open'));
+      if (!wasOpen) box.classList.add('open');
+    });
+  });
+
+  // ─── MOBILE HAMBURGER TOGGLE ──────────────────────────────────
+  document.getElementById('hamburgerMenuBtn').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('mobile-open-state');
+  });
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('mobile-open-state');
+    });
+  });
+
+  // ─── MULTI-STEP REGISTRATION CONTROLLER ────────────────────────
+  let stepperStep = 1;
+  const maxStepperSteps = 5;
+
+  function moveToStep(num) {
+    document.getElementById('pane-' + stepperStep).classList.remove('active');
+    document.getElementById('node-' + stepperStep).classList.remove('active');
+    
+    if (num > stepperStep) document.getElementById('node-' + stepperStep).classList.add('completed');
+    else document.getElementById('node-' + stepperStep).classList.remove('completed');
+    
+    stepperStep = num;
+    document.getElementById('pane-' + stepperStep).classList.add('active');
+    document.getElementById('node-' + stepperStep).classList.add('active');
+
+    // Controls display visibility
+    document.getElementById('navBackBtn').style.visibility = stepperStep === 1 ? 'hidden' : 'visible';
+    const finalStep = stepperStep === maxStepperSteps;
+    document.getElementById('navNextBtn').style.display   = finalStep ? 'none' : 'inline-flex';
+    document.getElementById('navSubmitFormBtn').style.display = finalStep ? 'inline-flex' : 'none';
+
+    if (stepperStep === 4) composeSummaryReceipt();
+    
+    // Smooth scroll disabled during step transitions to keep the form container locked in view
+    // window.scrollTo({ top: document.getElementById('register').offsetTop - 80, behavior: 'smooth' });
+  }
+
+  function validateInputStep(stepIndex) {
+    let statusOk = true;
+    function checkControlValue(id, criteria) {
+      const inp = document.getElementById(id);
+      const groupNode = inp ? inp.closest('.form-field-group') : null;
+      if (!groupNode) return;
+      
+      const isValidValue = criteria(inp.value.trim());
+      groupNode.classList.toggle('has-err-state', !isValidValue);
+      inp.classList.toggle('has-error', !isValidValue);
+      inp.classList.toggle('is-valid', isValidValue);
+      
+      if (!isValidValue && statusOk) {
+        statusOk = false;
+        inp.focus();
+      }
+    }
+    
+    if (stepIndex === 1) {
+      checkControlValue('teamName', val => val.length > 0);
+    } else if (stepIndex === 2) {
+      checkControlValue('teamLeaderName', val => val.length > 0);
+      checkControlValue('teamLeaderMail', val => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val));
+      checkControlValue('teamLeaderMobile', val => /^[6-9]\d{9}$/.test(val));
+    } else if (stepIndex === 3) {
+      checkControlValue('member1Name', val => val.length > 0);
+      checkControlValue('member1Mail', val => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val));
+      checkControlValue('member1Phone', val => /^[6-9]\d{9}$/.test(val));
+      
+      // Optional Member 2 Validation
+      const m2Name = document.getElementById('member2Name').value.trim();
+      if (m2Name.length > 0) {
+        checkControlValue('member2Mail', val => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val));
+        checkControlValue('member2Phone', val => /^[6-9]\d{9}$/.test(val));
+      } else {
+        document.getElementById('fg-member2Mail').classList.remove('has-err-state');
+        document.getElementById('fg-member2Phone').classList.remove('has-err-state');
+      }
+      
+      // Optional Member 3 Validation
+      const m3Name = document.getElementById('member3Name').value.trim();
+      if (m3Name.length > 0) {
+        checkControlValue('member3Mail', val => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val));
+        checkControlValue('member3Phone', val => /^[6-9]\d{9}$/.test(val));
+      } else {
+        document.getElementById('fg-member3Mail').classList.remove('has-err-state');
+        document.getElementById('fg-member3Phone').classList.remove('has-err-state');
+      }
+    } else if (stepIndex === 5) {
+      const type = document.getElementById('regType').value;
+      if (type === 'internal') {
+        checkControlValue('internalRegNo', val => val.length > 0);
+        checkControlValue('collegeIdFile', val => val.length > 0 || document.getElementById('fileData').value.length > 0);
+      } else {
+        // Validate custom checkbox value is 'yes'
+        const isPaid = document.getElementById('hasPaid').value === 'yes';
+        const hasPaidGp = document.getElementById('fg-hasPaid');
+        hasPaidGp.classList.toggle('has-err-state', !isPaid);
+        if (!isPaid) {
+          statusOk = false;
+        }
+
+        checkControlValue('externalTxnId', val => val.length >= 6);
+        checkControlValue('paymentFile', val => val.length > 0 || document.getElementById('fileData').value.length > 0);
+      }
+    }
+    return statusOk;
+  }
+
+  function composeSummaryReceipt() {
+    const valObj = id => document.getElementById(id)?.value.trim() || '—';
+    const hasM2 = valObj('member2Name') !== '—';
+    const hasM3 = valObj('member3Name') !== '—';
+    
+    document.getElementById('registrationSummaryPanel').innerHTML = `
+      <div class="summary-card-block">
+        <div class="summary-section-title">🏷 Team Name</div>
+        <div class="summary-details-grid" style="grid-template-columns:1fr;">
+          <div class="summary-detail-item"><div class="summary-detail-lbl">Name</div><div class="summary-detail-val">${valObj('teamName')}</div></div>
+        </div>
+      </div>
+      <div class="summary-card-block">
+        <div class="summary-section-title">👤 Team Leader Info</div>
+        <div class="summary-details-grid">
+          <div class="summary-detail-item"><div class="summary-detail-lbl">Name</div><div class="summary-detail-val">${valObj('teamLeaderName')}</div></div>
+          <div class="summary-detail-item"><div class="summary-detail-lbl">Email Address</div><div class="summary-detail-val">${valObj('teamLeaderMail')}</div></div>
+          <div class="summary-detail-item"><div class="summary-detail-lbl">Mobile Number</div><div class="summary-detail-val">${valObj('teamLeaderMobile')}</div></div>
+        </div>
+      </div>
+      <div class="summary-card-block">
+        <div class="summary-section-title">👥 Member 1 Details</div>
+        <div class="summary-details-grid">
+          <div class="summary-detail-item"><div class="summary-detail-lbl">Name</div><div class="summary-detail-val">${valObj('member1Name')}</div></div>
+          <div class="summary-detail-item"><div class="summary-detail-lbl">Email Address</div><div class="summary-detail-val">${valObj('member1Mail')}</div></div>
+          <div class="summary-detail-item"><div class="summary-detail-lbl">Phone Number</div><div class="summary-detail-val">${valObj('member1Phone')}</div></div>
+        </div>
+      </div>
+      ${hasM2 ? `<div class="summary-card-block"><div class="summary-section-title">👥 Member 2 Details</div><div class="summary-details-grid">
+        <div class="summary-detail-item"><div class="summary-detail-lbl">Name</div><div class="summary-detail-val">${valObj('member2Name')}</div></div>
+        <div class="summary-detail-item"><div class="summary-detail-lbl">Email</div><div class="summary-detail-val">${valObj('member2Mail')}</div></div>
+        <div class="summary-detail-item"><div class="summary-detail-lbl">Phone</div><div class="summary-detail-val">${valObj('member2Phone')}</div></div>
+      </div></div>` : ''}
+      ${hasM3 ? `<div class="summary-card-block"><div class="summary-section-title">👥 Member 3 Details</div><div class="summary-details-grid">
+        <div class="summary-detail-item"><div class="summary-detail-lbl">Name</div><div class="summary-detail-val">${valObj('member3Name')}</div></div>
+        <div class="summary-detail-item"><div class="summary-detail-lbl">Email</div><div class="summary-detail-val">${valObj('member3Mail')}</div></div>
+        <div class="summary-detail-item"><div class="summary-detail-lbl">Phone</div><div class="summary-detail-val">${valObj('member3Phone')}</div></div>
+      </div></div>` : ''}
+    `;
+  }
+
+  document.getElementById('navNextBtn').addEventListener('click', () => {
+    if (validateInputStep(stepperStep)) moveToStep(stepperStep + 1);
+  });
+  document.getElementById('navBackBtn').addEventListener('click', () => {
+    if (stepperStep > 1) moveToStep(stepperStep - 1);
+  });
+
+  // Premature Enter submit block
+  document.getElementById('hackForm').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      if (e.target.tagName === 'INPUT') {
+        e.preventDefault();
+        const nextBtn = document.getElementById('navNextBtn');
+        if (nextBtn && nextBtn.style.display !== 'none') {
+          nextBtn.click();
+        }
+      }
+    }
+  });
+
+  // Full validation on submission
+  function finalValidateSubmission() {
+    for (let i = 1; i <= maxStepperSteps; i++) {
+      if (!validateInputStep(i)) {
+        moveToStep(i);
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // ─── FILE UPLOAD & VERIFICATION RADIO SYSTEM ───────────────────
+  const regStatusRadios = document.getElementsByName('collegeStatus');
+  const sectionInternalCol = document.getElementById('sectionInternalCol');
+  const sectionExternalCol = document.getElementById('sectionExternalCol');
+  const regTypeHidden = document.getElementById('regType');
+
+  regStatusRadios.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      const type = e.target.value;
+      regTypeHidden.value = type;
+      if (type === 'internal') {
+        sectionInternalCol.style.display = 'grid';
+        sectionExternalCol.style.display = 'none';
+      } else {
+        sectionInternalCol.style.display = 'none';
+        sectionExternalCol.style.display = 'block';
+      }
+      // Reset files, text inputs, and hidden values
+      document.getElementById('collegeIdFile').value = '';
+      document.getElementById('paymentFile').value = '';
+      document.getElementById('internalRegNo').value = '';
+      document.getElementById('externalTxnId').value = '';
+      document.getElementById('fileData').value = '';
+      document.getElementById('fileName').value = '';
+      document.getElementById('fileMime').value = '';
+      
+      // Clear error styling
+      document.querySelectorAll('#collegeIdFile, #paymentFile, #internalRegNo, #externalTxnId').forEach(inp => {
+        inp.classList.remove('is-valid', 'has-error');
+        const gp = inp.closest('.form-field-group');
+        if (gp) gp.classList.remove('has-err-state');
+      });
+      document.getElementById('fg-hasPaid').classList.remove('has-err-state');
+      
+      // Hide previews and show upload zones
+      document.querySelectorAll('.file-preview-container').forEach(prv => prv.style.display = 'none');
+      document.querySelectorAll('.file-drag-zone').forEach(zn => zn.style.display = 'flex');
+      
+      // Reset payment status checkbox
+      document.getElementById('card-hasPaid').classList.remove('checked');
+      document.getElementById('hasPaid').value = 'no';
+    });
+  });
+
+  // Segmented Control Switcher
+  const toggleOptions = document.querySelectorAll('.segmented-control-option');
+  const toggleWrapper = document.getElementById('collegeStatusToggle');
+  const radioInternal = document.getElementById('radioStatusInternal');
+  const radioExternal = document.getElementById('radioStatusExternal');
+
+  toggleOptions.forEach(opt => {
+    opt.addEventListener('click', () => {
+      toggleOptions.forEach(o => o.classList.remove('active'));
+      opt.classList.add('active');
+      const val = opt.getAttribute('data-value');
+      toggleWrapper.setAttribute('data-active', val);
+      
+      if (val === 'internal') {
+        radioInternal.checked = true;
+        radioInternal.dispatchEvent(new Event('change'));
+      } else {
+        radioExternal.checked = true;
+        radioExternal.dispatchEvent(new Event('change'));
+      }
+    });
+  });
+
+  // Custom Checkbox Card Switcher
+  const checkboxCard = document.getElementById('card-hasPaid');
+  const hiddenHasPaid = document.getElementById('hasPaid');
+  
+  checkboxCard.addEventListener('click', () => {
+    checkboxCard.classList.toggle('checked');
+    const checked = checkboxCard.classList.contains('checked');
+    hiddenHasPaid.value = checked ? 'yes' : 'no';
+    if (checked) {
+      document.getElementById('fg-hasPaid').classList.remove('has-err-state');
+    }
+  });
+
+  // Drag and Drop & Base64 Compression Engine
+  function initializeDragZone(zoneId, inputId, previewId, nameId, removeId) {
+    const zone = document.getElementById(zoneId);
+    const input = document.getElementById(inputId);
+    const preview = document.getElementById(previewId);
+    const nameSpan = document.getElementById(nameId);
+    const removeBtn = document.getElementById(removeId);
+
+    // Prevent defaults for drag events
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      zone.addEventListener(eventName, e => {
+        e.preventDefault();
+        e.stopPropagation();
+      }, false);
+    });
+
+    // Highlight drop zone on drag hover
+    ['dragenter', 'dragover'].forEach(eventName => {
+      zone.addEventListener(eventName, () => zone.classList.add('dragover'), false);
+    });
+    ['dragleave', 'drop'].forEach(eventName => {
+      zone.addEventListener(eventName, () => zone.classList.remove('dragover'), false);
+    });
+
+    // Handle dropped files
+    zone.addEventListener('drop', e => {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      if (files.length) {
+        input.files = files;
+        input.dispatchEvent(new Event('change'));
+      }
+    });
+
+    // Handle file selection changes (performs resizing/compression)
+    input.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      nameSpan.textContent = file.name;
+      
+      const groupNode = input.closest('.form-field-group');
+      const errorLabel = groupNode ? groupNode.querySelector('.field-error-feedback') : null;
+      if (errorLabel) {
+        errorLabel.textContent = 'Processing image...';
+        errorLabel.style.color = 'var(--secondary)';
+        errorLabel.style.display = 'block';
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          
+          const MAX_SIZE = 800; // Optimized for faster upload speed
+          if (width > height) {
+            if (width > MAX_SIZE) {
+              height *= MAX_SIZE / width;
+              width = MAX_SIZE;
+            }
+          } else {
+            if (height > MAX_SIZE) {
+              width *= MAX_SIZE / height;
+              height = MAX_SIZE;
+            }
+          }
+          
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          
+          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.60); // 0.60 quality for faster network transmission
+          const rawBase64 = compressedDataUrl.split(',')[1];
+          
+          document.getElementById('fileData').value = rawBase64;
+          document.getElementById('fileName').value = file.name.replace(/\.[^/.]+$/, "") + ".jpg";
+          document.getElementById('fileMime').value = 'image/jpeg';
+          
+          // Display preview, hide zone
+          const imgEl = preview.querySelector('.file-preview-img');
+          if (imgEl) imgEl.src = compressedDataUrl;
+          preview.style.display = 'block';
+          zone.style.display = 'none';
+
+          if (errorLabel) {
+            errorLabel.style.display = 'none';
+          }
+          
+          const gp = input.closest('.form-field-group');
+          if (gp) {
+            gp.classList.remove('has-err-state');
+            input.classList.remove('has-error');
+            input.classList.add('is-valid');
+          }
+        };
+        img.onerror = function() {
+          const rawBase64 = evt.target.result.split(',')[1];
+          document.getElementById('fileData').value = rawBase64;
+          document.getElementById('fileName').value = file.name;
+          document.getElementById('fileMime').value = file.type;
+          
+          const imgEl = preview.querySelector('.file-preview-img');
+          if (imgEl) imgEl.src = evt.target.result;
+          preview.style.display = 'block';
+          zone.style.display = 'none';
+          
+          if (errorLabel) {
+            errorLabel.style.display = 'none';
+          }
+          
+          const gp = input.closest('.form-field-group');
+          if (gp) {
+            gp.classList.remove('has-err-state');
+            input.classList.remove('has-error');
+            input.classList.add('is-valid');
+          }
+        };
+        img.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Remove uploaded files
+    removeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      input.value = '';
+      document.getElementById('fileData').value = '';
+      document.getElementById('fileName').value = '';
+      document.getElementById('fileMime').value = '';
+      
+      preview.style.display = 'none';
+      zone.style.display = 'flex';
+      
+      const gp = input.closest('.form-field-group');
+      if (gp) {
+        gp.classList.remove('has-err-state');
+        input.classList.remove('is-valid');
+      }
+    });
+  }
+
+  initializeDragZone('zone-collegeIdFile', 'collegeIdFile', 'preview-collegeIdFile', 'name-collegeIdFile', 'remove-collegeIdFile');
+  initializeDragZone('zone-paymentFile', 'paymentFile', 'preview-paymentFile', 'name-paymentFile', 'remove-paymentFile');
+
+  // Clear live errors on inputs
+  document.querySelectorAll('.form-input-control').forEach(inp => {
+    inp.addEventListener('input', () => {
+      const gp = inp.closest('.form-field-group');
+      if (gp && gp.classList.contains('has-err-state') && inp.value.trim()) {
+        gp.classList.remove('has-err-state');
+        inp.classList.remove('has-error');
+        inp.classList.add('is-valid');
+      }
+    });
+  });
+
+  // ─── GENERATE & DOWNLOAD REGISTRATION RECEIPT PDF ─────────────
+  function generateReceiptPDF() {
+    try {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      
+      const teamName = document.getElementById('teamName').value.trim();
+      const leaderName = document.getElementById('teamLeaderName').value.trim();
+      const leaderMail = document.getElementById('teamLeaderMail').value.trim();
+      const leaderMobile = document.getElementById('teamLeaderMobile').value.trim();
+      
+      const m1Name = document.getElementById('member1Name').value.trim();
+      const m1Mail = document.getElementById('member1Mail').value.trim();
+      const m1Phone = document.getElementById('member1Phone').value.trim();
+      
+      const m2Name = document.getElementById('member2Name').value.trim();
+      const m2Mail = document.getElementById('member2Mail').value.trim();
+      const m2Phone = document.getElementById('member2Phone').value.trim();
+      
+      const m3Name = document.getElementById('member3Name').value.trim();
+      const m3Mail = document.getElementById('member3Mail').value.trim();
+      const m3Phone = document.getElementById('member3Phone').value.trim();
+      
+      const regType = document.getElementById('regType').value;
+      const receiptNo = `SYN-26-${Math.floor(100000 + Math.random() * 900000)}`;
+      const currentDate = new Date().toLocaleString();
+
+      // ─── ADVANCED TECH DESIGN BACKGROUND ───
+      // 1. Technical Grid Lines (Blueprint mesh)
+      doc.setDrawColor(242, 240, 248);
+      doc.setLineWidth(0.08);
+      for (let x = 10; x < 200; x += 15) {
+        doc.line(x, 45, x, 282);
+      }
+      for (let y = 45; y < 282; y += 15) {
+        doc.line(10, y, 200, y);
+      }
+
+      // 2. Large Faded Logo Watermark in Center
+      // To change the opacity of this background logo, adjust the 'opacity' decimal below (e.g. 0.85 = 85% opacity, 1.00 = full opacity)
+      if (typeof WATERMARK_LOGO_BASE64 !== 'undefined') {
+        doc.saveGraphicsState();
+        doc.setGState(new doc.GState({ opacity: 4.00 })); 
+        doc.addImage(WATERMARK_LOGO_BASE64, 'JPEG', 45, 88.5, 120, 120);
+        doc.restoreGraphicsState();
+      }
+
+      // ─── PREMIUM HEADER BLOCK ───
+      // Dark Header Band
+      doc.setFillColor(15, 10, 30);
+      doc.rect(0, 0, 210, 45, 'F');
+      
+      // Cybernetic Accent Line
+      doc.setFillColor(6, 182, 212); // Cyan accent
+      doc.rect(0, 43, 210, 2, 'F');
+
+      // Sharp Logo inside Circular Cyber Glow Frame
+      // To change the opacity of this header logo, adjust the 'opacity' decimal below (e.g. 1.00 = full opacity, 0.80 = 80% opacity)
+      if (typeof SHARP_LOGO_BASE64 !== 'undefined') {
+        doc.setDrawColor(6, 182, 212); // Glowing border
+        doc.setLineWidth(0.6);
+        doc.circle(184.5, 22.5, 13.5);
+        
+        doc.saveGraphicsState();
+        doc.setGState(new doc.GState({ opacity: 5.00 })); // Glow effect
+        doc.addImage(SHARP_LOGO_BASE64, 'JPEG', 171.5, 9.5, 26, 26);
+        doc.restoreGraphicsState();
+      }
+
+      // Header Brand text
+      doc.setTextColor(6, 182, 212);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(26);
+      doc.text("SYNORA '26", 15, 20);
+      
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(9.5);
+      doc.setFont("helvetica", "normal");
+      doc.text("NATIONAL LEVEL COLLEGE HACKATHON · ENTRY PASS", 15, 28);
+      
+      doc.setTextColor(150, 150, 160);
+      doc.setFontSize(8.5);
+      doc.text(`ID: ${receiptNo}  |  Issued: ${currentDate}`, 15, 36);
+      
+      // ─── TICKET DETAILS BODY ───
+      doc.setTextColor(50, 50, 55);
+      let y = 60;
+      
+      // Section 1: Team & Event Overview
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(13);
+      doc.text("1. Team Overview", 15, y);
+      y += 8;
+      
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10.5);
+      doc.text(`Team Name: ${teamName}`, 20, y);
+      y += 6;
+      doc.text(`Registration Type: ${regType === 'internal' ? '🏫 Internal Student' : '🌐 External Team'}`, 20, y);
+      y += 6;
+      doc.text(`Registration Fee Status: ${regType === 'internal' ? 'Free (Internal Enrollment)' : 'Paid (INR 300 per Team)'}`, 20, y);
+      y += 12;
+
+      // Section 2: Team Leader
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(13);
+      doc.text("2. Team Leader Details", 15, y);
+      y += 8;
+      
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10.5);
+      doc.text(`Full Name: ${leaderName}`, 20, y);
+      y += 6;
+      doc.text(`Email Address: ${leaderMail}`, 20, y);
+      y += 6;
+      doc.text(`Mobile Number: ${leaderMobile}`, 20, y);
+      y += 12;
+
+      // Section 3: Team Members
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(13);
+      doc.text("3. Team Members Details", 15, y);
+      y += 8;
+      
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10.5);
+      doc.text(`Member 1: ${m1Name}  |  ${m1Mail}  |  ${m1Phone}`, 20, y);
+      y += 6;
+      
+      if (m2Name) {
+        doc.text(`Member 2: ${m2Name}  |  ${m2Mail}  |  ${m2Phone}`, 20, y);
+        y += 6;
+      }
+      if (m3Name) {
+        doc.text(`Member 3: ${m3Name}  |  ${m3Mail}  |  ${m3Phone}`, 20, y);
+        y += 6;
+      }
+      y += 10;
+
+      // Section 4: Verification & Payment Info
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(13);
+      doc.text("4. Verification Details", 15, y);
+      y += 8;
+      
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10.5);
+      if (regType === 'internal') {
+        const regNo = document.getElementById('internalRegNo').value.trim();
+        doc.text(`College Registration Number: ${regNo}`, 20, y);
+        y += 6;
+        doc.text(`Uploaded ID Card Proof: Yes (Logged in Database)`, 20, y);
+      } else {
+        const txnId = document.getElementById('externalTxnId').value.trim();
+        doc.text(`Transaction / UPI ID Ref: ${txnId}`, 20, y);
+        y += 6;
+        doc.text(`Screenshot Proof: Yes (Logged in Database)`, 20, y);
+      }
+      y += 16;
+
+      // Section 5: Hackathon Timeline Summary
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(11.5);
+      doc.text("Event Schedule (August 28, 2026)", 15, y);
+      y += 6;
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(8.5);
+      doc.text("08:00 AM - Check-in & Desk Registration  |  08:45 AM - Inauguration  |  09:00 AM - Problem Release", 15, y);
+      y += 4.5;
+      doc.text("10:00 AM - Round 1 Coding Sprint  |  11:30 AM - Round 2 Development  |  12:30 PM - Lunch Break", 15, y);
+      y += 4.5;
+      doc.text("01:15 PM - Final Evaluation Round  |  02:45 PM - Event Concludes", 15, y);
+      y += 10;
+
+      // Decorative divider
+      doc.setDrawColor(200, 200, 205);
+      doc.setLineWidth(0.4);
+      doc.line(15, y, 195, y);
+      y += 8;
+
+      // ─── TICKETING BARCODE & CHECK-IN SYSTEM ───
+      try {
+        // Draw a simulated 1D barcode using varying width lines for the entry scanner
+        doc.setFillColor(30, 30, 40);
+        let curX = 15;
+        const codeString = receiptNo;
+        for (let i = 0; i < codeString.length; i++) {
+          let charCode = codeString.charCodeAt(i);
+          for (let bit = 0; bit < 6; bit++) {
+            let barWidth = (charCode & (1 << bit)) ? 1.0 : 0.35;
+            let isSpace = (bit % 2 === 0);
+            if (!isSpace) {
+              doc.rect(curX, y, barWidth, 11, 'F');
+            }
+            curX += barWidth + 0.3;
+          }
+        }
+        // Label the barcode
+        doc.setFont("courier", "normal");
+        doc.setFontSize(7.5);
+        doc.setTextColor(110, 110, 120);
+        doc.text(`*${receiptNo}*`, 15, y + 14.5);
+      } catch (barcodeErr) {
+        console.error("Barcode drawing failed:", barcodeErr);
+      }
+
+      // Disclaimer / Footer (Right Aligned next to Barcode)
+      doc.setFont("helvetica", "italic");
+      doc.setFontSize(7.8);
+      doc.setTextColor(120, 120, 125);
+      doc.text("Present this file on your mobile device at the college desk.", 98, y + 3);
+      doc.text("You will receive snacks and a physical Welcome Kit (Folder, Papers, Pen).", 98, y + 7.5);
+      doc.text("Registration is subject to payment/enrollment verification.", 98, y + 12);
+
+      // Save PDF
+      doc.save(`Synora_Registration_${teamName.replace(/\s+/g, '_')}.pdf`);
+    } catch(err) {
+      console.error("PDF generation failed:", err);
+    }
+  }
+
+  // ─── FORM SUBMIT POST REQUEST ─────────────────────────────────
+  document.getElementById('hackForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (!finalValidateSubmission()) return;
+
+    const submitBtn = document.getElementById('navSubmitFormBtn');
+    const spinIcon = document.getElementById('spinnerIcon');
+    const submitText = document.getElementById('submitLabel');
+    const feedbox = document.getElementById('submitFeedbackNotificationBox');
+
+    submitBtn.disabled = true;
+    spinIcon.style.display = 'inline-block';
+    submitText.textContent = 'Submitting...';
+    feedbox.style.display = 'none';
+
+    // We send via standard fetch POST to read the Apps Script validation response
+    const formData = new FormData(this);
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: new URLSearchParams(formData)
+    })
+    .then(response => {
+      if (!response.ok) throw new Error("Server responded with HTTP status " + response.status);
+      return response.json();
+    })
+    .then(res => {
+      spinIcon.style.display = 'none';
+      
+      if (res.status === 'success') {
+        submitText.textContent = '✅ Confirmed!';
+        triggerConfettiFireworks();
+        
+        // Auto-generate and download the registration receipt PDF
+        generateReceiptPDF();
+
+        // Update receipts labels
+        document.getElementById('successConfTeam').textContent = document.getElementById('teamName').value.trim();
+        document.getElementById('rec-team').textContent = document.getElementById('teamName').value.trim();
+        document.getElementById('rec-leader').textContent = document.getElementById('teamLeaderName').value.trim();
+        document.getElementById('rec-email').textContent = document.getElementById('teamLeaderMail').value.trim();
+
+        // Trigger panels display toggles
+        document.getElementById('hackForm').style.display = 'none';
+        document.getElementById('stepperProgressBar').style.display = 'none';
+        document.getElementById('successOverlayBlock').style.display = 'block';
+
+        // Scroll to modules top
+        window.scrollTo({ top: document.getElementById('register').offsetTop - 80, behavior: 'smooth' });
+      } else {
+        // Show server-side validation error (e.g. duplicate team name)
+        submitBtn.disabled = false;
+        submitText.textContent = '🚀 Confirm Submission';
+        feedbox.style.display = 'block';
+        feedbox.style.color = '#f87171';
+        feedbox.textContent = `❌ Registration Failed: ${res.message || 'Validation error'}`;
+      }
+    })
+    .catch(err => {
+      console.error("Submission failed:", err);
+      spinIcon.style.display = 'none';
+      submitBtn.disabled = false;
+      submitText.textContent = '🚀 Confirm Submission';
+      feedbox.style.display = 'block';
+      feedbox.style.color = '#f87171';
+      feedbox.textContent = "❌ Connection failed. Please check your internet connection and try again.";
+    });
+  });
+
+  // ─── CONSOLE APPLICATION RESET ────────────────────────────────
+  document.getElementById('btnResetApplication').addEventListener('click', () => {
+    const targetForm = document.getElementById('hackForm');
+    targetForm.reset();
+
+    // Clear validate borders classes
+    document.querySelectorAll('.form-input-control').forEach(inp => {
+      inp.classList.remove('is-valid', 'has-error');
+      const gp = inp.closest('.form-field-group');
+      if (gp) gp.classList.remove('has-err-state');
+    });
+
+    // Reset progress steppers UI
+    for (let i = 1; i <= maxStepperSteps; i++) {
+      const nodeCol = document.getElementById('node-' + i);
+      if (nodeCol) {
+        nodeCol.classList.remove('active', 'completed');
+      }
+    }
+
+    // Reset payment sections to internal default
+    document.getElementById('fileData').value = '';
+    document.getElementById('fileName').value = '';
+    document.getElementById('fileMime').value = '';
+    document.getElementById('regType').value = 'internal';
+    document.getElementById('sectionInternalCol').style.display = 'grid';
+    document.getElementById('sectionExternalCol').style.display = 'none';
+
+    document.getElementById('hasPaid').value = 'no';
+    document.getElementById('card-hasPaid').classList.remove('checked');
+    document.getElementById('fg-hasPaid').classList.remove('has-err-state');
+
+    // Set step 1 active states
+    stepperStep = 1;
+    document.getElementById('pane-1').classList.add('active');
+    for (let i = 2; i <= maxStepperSteps; i++) {
+      document.getElementById('pane-' + i).classList.remove('active');
+    }
+    document.getElementById('node-1').classList.add('active');
+
+    // Toggle panels displays
+    document.getElementById('hackForm').style.display = 'block';
+    document.getElementById('stepperProgressBar').style.display = 'block';
+    document.getElementById('successOverlayBlock').style.display = 'none';
+
+    // Reset submit button state
+    const submitBtn = document.getElementById('navSubmitFormBtn');
+    const submitText = document.getElementById('submitLabel');
+    submitBtn.disabled = false;
+    submitText.textContent = '🚀 Confirm Submission';
+
+    // Reset visibility configurations
+    document.getElementById('navBackBtn').style.visibility = 'hidden';
+    document.getElementById('navNextBtn').style.display = 'inline-flex';
+    document.getElementById('navSubmitFormBtn').style.display = 'none';
+
+    // Scroll to modules top
+    window.scrollTo({ top: document.getElementById('register').offsetTop - 80, behavior: 'smooth' });
+  });
+
+  // ─── PREMIUM CONFETTI ANIMATION FIREWORKS ─────────────────────
+  function triggerConfettiFireworks() {
+    const palettes = ['#7c3aed', '#06b6d4', '#ec4899', '#f59e0b', '#10b981', '#3b82f6'];
+    for (let i = 0; i < 150; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-particle';
+      const sizeValue = Math.random() * 12 + 6;
+      piece.style.cssText = `
+        left: ${Math.random() * 100}vw;
+        width: ${sizeValue}px; height: ${sizeValue}px;
+        background: ${palettes[Math.floor(Math.random() * palettes.length)]};
+        animation-duration: ${Math.random() * 2.5 + 2}s;
+        animation-delay: ${Math.random() * 0.5}s;
+        border-radius: ${Math.random() > 0.4 ? '50%' : '3px'};
+      `;
+      document.body.appendChild(piece);
+      piece.addEventListener('animationend', () => piece.remove());
+    }
+  }
+
+  // ─── DYNAMIC AUTOFILL DEMO BUTTON INJECTION ────────────────────
+  if (window.location.search.includes('demo') || window.location.search.includes('test')) {
+    const headerTitle = document.querySelector('.registration-progress-title');
+    if (headerTitle) {
+      headerTitle.style.display = 'flex';
+      headerTitle.style.alignItems = 'center';
+      headerTitle.style.justifyContent = 'space-between';
+      headerTitle.style.width = '100%';
+      headerTitle.style.gap = '12px';
+      headerTitle.style.flexWrap = 'wrap';
+      
+      const titleSpan = document.createElement('span');
+      titleSpan.textContent = '📝 Register Your Team';
+      
+      const autofillBtn = document.createElement('button');
+      autofillBtn.type = 'button';
+      autofillBtn.id = 'autofillDemoBtn';
+      autofillBtn.textContent = '⚡ Quick Fill Demo';
+      autofillBtn.style.cssText = "background: rgba(6, 182, 212, 0.15); color: var(--secondary); border: 1px solid var(--secondary); padding: 5px 12px; font-size: 0.8rem; border-radius: var(--r-sm); cursor: pointer; transition: all 0.2s; font-weight: 700; font-family: 'Space Grotesk', sans-serif;";
+      
+      autofillBtn.onmouseover = () => {
+        autofillBtn.style.background = 'var(--secondary)';
+        autofillBtn.style.color = 'var(--bg)';
+        autofillBtn.style.transform = 'translateY(-1px)';
+      };
+      autofillBtn.onmouseout = () => {
+        autofillBtn.style.background = 'rgba(6, 182, 212, 0.15)';
+        autofillBtn.style.color = 'var(--secondary)';
+        autofillBtn.style.transform = 'none';
+      };
+      
+      headerTitle.textContent = '';
+      headerTitle.appendChild(titleSpan);
+      headerTitle.appendChild(autofillBtn);
+      
+      autofillBtn.addEventListener('click', () => {
+        const rand = () => Math.floor(Math.random() * 899) + 100;
+        const phone = () => "9" + Math.floor(100000000 + Math.random() * 900000000);
+        const teamNum = rand();
+        
+        document.getElementById('teamName').value = "Synergy " + teamNum;
+        
+        document.getElementById('teamLeaderName').value = "Jagan " + teamNum;
+        document.getElementById('teamLeaderMail').value = "jagan" + teamNum + "@gmail.com";
+        document.getElementById('teamLeaderMobile').value = phone();
+        
+        document.getElementById('member1Name').value = "Ravi " + teamNum;
+        document.getElementById('member1Mail').value = "ravi" + teamNum + "@gmail.com";
+        document.getElementById('member1Phone').value = phone();
+        
+        document.getElementById('member2Name').value = "Vijay " + teamNum;
+        document.getElementById('member2Mail').value = "vijay" + teamNum + "@gmail.com";
+        document.getElementById('member2Phone').value = phone();
+        
+        document.getElementById('member3Name').value = "Anand " + teamNum;
+        document.getElementById('member3Mail').value = "anand" + teamNum + "@gmail.com";
+        document.getElementById('member3Phone').value = phone();
+
+        // Mark fields valid
+        document.querySelectorAll('.form-input-control').forEach(inp => {
+          inp.classList.add('is-valid');
+          inp.classList.remove('has-error');
+          const gp = inp.closest('.form-field-group');
+          if (gp) gp.classList.remove('has-err-state');
+        });
+
+        // Select internal or external at random
+        const regType = Math.random() > 0.5 ? 'internal' : 'external';
+        document.getElementById(regType === 'internal' ? 'radioStatusInternal' : 'radioStatusExternal').click();
+
+        const dummyBase64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
+        document.getElementById('fileData').value = dummyBase64;
+        document.getElementById('fileName').value = "autofill_screenshot.png";
+        document.getElementById('fileMime').value = "image/png";
+
+        if (regType === 'internal') {
+          document.getElementById('internalRegNo').value = "REG-" + teamNum + "College";
+          document.getElementById('internalRegNo').classList.add('is-valid');
+          
+          const preview = document.getElementById('preview-collegeIdFile');
+          const zone = document.getElementById('zone-collegeIdFile');
+          const nameSpan = document.getElementById('name-collegeIdFile');
+          const imgEl = preview.querySelector('.file-preview-img');
+          
+          if (imgEl) imgEl.src = "data:image/png;base64," + dummyBase64;
+          nameSpan.textContent = "autofill_college_id.png";
+          preview.style.display = 'block';
+          zone.style.display = 'none';
+          
+          const gp = document.getElementById('internalRegNo').closest('.form-field-group');
+          if (gp) gp.classList.remove('has-err-state');
+        } else {
+          document.getElementById('externalTxnId').value = "TXN-" + teamNum + "999";
+          document.getElementById('externalTxnId').classList.add('is-valid');
+          
+          document.getElementById('hasPaid').value = 'yes';
+          document.getElementById('card-hasPaid').classList.add('checked');
+          document.getElementById('fg-hasPaid').classList.remove('has-err-state');
+          
+          const preview = document.getElementById('preview-paymentFile');
+          const zone = document.getElementById('zone-paymentFile');
+          const nameSpan = document.getElementById('name-paymentFile');
+          const imgEl = preview.querySelector('.file-preview-img');
+          
+          if (imgEl) imgEl.src = "data:image/png;base64," + dummyBase64;
+          nameSpan.textContent = "autofill_payment_screnshot.png";
+          preview.style.display = 'block';
+          zone.style.display = 'none';
+          
+          const gp = document.getElementById('externalTxnId').closest('.form-field-group');
+          if (gp) gp.classList.remove('has-err-state');
+        }
+
+        // Set stepper nodes to completed
+        for (let i = 1; i < maxStepperSteps; i++) {
+          const nodeCol = document.getElementById('node-' + i);
+          if (nodeCol) {
+            nodeCol.classList.add('completed');
+            nodeCol.classList.remove('active');
+          }
+        }
+
+        composeSummaryReceipt();
+        moveToStep(5);
+      });
+    }
+  }
+
+</script>
+
+</body>
+</html>
